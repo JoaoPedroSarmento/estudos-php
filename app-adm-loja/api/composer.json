@@ -1,19 +1,20 @@
 {
     "name": "root/api",
     "autoload": {
+        "psr-4": {
         "": [
             "src",
+            "src/controller",
+            "src/excecoes", 
             "src/model",
-            "src/util",
-            "src/controller", 
-            "src/excecoes"
-
+            "src/model/produto",
+            "src/util"
         ]
+    }
     },
     "authors": [
         {
-            "name": "João Sarmento",
-            "email": "joaomoraes@dzaine.net"
+            "name": "João Sarmento"
         }
     ],
     "require": {}

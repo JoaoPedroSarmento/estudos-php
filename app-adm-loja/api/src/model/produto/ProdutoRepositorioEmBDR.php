@@ -3,19 +3,12 @@
 declare(strict_types=1);
 
 
-class ProdutoRepositorioEmBDR  implements Repositorio{
+class ProdutoRepositorioEmBDR extends RepositorioEmBDR implements Repositorio{
       
-  private RepositorioEmBDR $repositorioEmBDR;
-
-    public function __construct(PDO $conexao){
-        $this->repositorioEmBDR = new RepositorioEmBDR($conexao);
-    }
-    
-
     public function obterTodos ():array {
        $sql = "SELECT * FROM produto";
        $msgErro = "Erro ao listar produtos!";
-       return $this->repositorioEmBDR->get($sql , $msgErro);
+       return $this->get($sql , $msgErro);
     }
 
     public function inserir(object $produto): int{
@@ -28,7 +21,7 @@ class ProdutoRepositorioEmBDR  implements Repositorio{
         "codigo" => $produto->codigo
       ];
 
-      return $this->repositorioEmBDR->post($sql , $msgErro , $parametros);
+      return $this->post($sql , $msgErro ,  $produto, $parametros);
     }
 
 
@@ -42,7 +35,7 @@ class ProdutoRepositorioEmBDR  implements Repositorio{
         "codigo" => $produto->codigo,
        ];
 
-     return $this->repositorioEmBDR->post($sql , $msgErro , $parametros);
+     return $this->put($sql , $msgErro , $produto , $parametros);
 }
 
 public function excluirPeloId(int $id):int{
@@ -52,18 +45,18 @@ public function excluirPeloId(int $id):int{
     "id" => $id
   ];
 
-   return $this->repositorioEmBDR->excluirPeloId($sql ,$msgErro , $parametros);
+   return $this->delete($sql ,$msgErro , $parametros);
 
 }
 
 
-public function obterPeloId(int $id):Produto{
+public function obterPeloId(int $id):object{
   $sql = "SELECT * FROM produto WHERE id = :id";
   $msgErro = "Erro ao obter produto pelo id";
   $parametros = [
     "id" => $id
   ];
-  return $this->repositorioEmBDR->obterPeloId($sql , $msgErro , "Produto" , $parametros);
+  return $this->buscar($sql , $msgErro , "Produto" , $parametros);
 }
 
 
@@ -73,10 +66,8 @@ public function existeComId(int $id):bool{
   $parametros = [
     "id" => $id
   ];
-  return $this->repositorioEmBDR->existeComId($sql , $msgErro , $parametros);
+  return $this->existe($sql , $msgErro , $parametros);
 }
-
-
 
 }
 

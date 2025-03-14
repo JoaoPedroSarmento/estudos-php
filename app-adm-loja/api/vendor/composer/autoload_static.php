@@ -6,6 +6,28 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit3062d8d98078e72c9f1d44a3907354e8
 {
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/../..' . '/src',
+        1 => __DIR__ . '/../..' . '/src/controller',
+        2 => __DIR__ . '/../..' . '/src/excecoes',
+        3 => __DIR__ . '/../..' . '/src/model',
+        4 => __DIR__ . '/../..' . '/src/model/bairro',
+        5 => __DIR__ . '/../..' . '/src/model/categoria',
+        6 => __DIR__ . '/../..' . '/src/model/cidade',
+        7 => __DIR__ . '/../..' . '/src/model/cliente-endereco',
+        8 => __DIR__ . '/../..' . '/src/model/endereco',
+        9 => __DIR__ . '/../..' . '/src/model/pedido',
+        10 => __DIR__ . '/../..' . '/src/model/pedido-produto-tamanho',
+        11 => __DIR__ . '/../..' . '/src/model/produto',
+        12 => __DIR__ . '/../..' . '/src/model/tamanho',
+        13 => __DIR__ . '/../..' . '/src/model/tamanho-produto',
+        14 => __DIR__ . '/../..' . '/src/model/uf',
+        15 => __DIR__ . '/../..' . '/src/model/usuario',
+        16 => __DIR__ . '/../..' . '/src/model/usuario/admin',
+        17 => __DIR__ . '/../..' . '/src/model/usuario/cliente',
+        18 => __DIR__ . '/../..' . '/src/model/usuario/funcionario',
+    );
+
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
@@ -13,6 +35,7 @@ class ComposerStaticInit3062d8d98078e72c9f1d44a3907354e8
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->fallbackDirsPsr4 = ComposerStaticInit3062d8d98078e72c9f1d44a3907354e8::$fallbackDirsPsr4;
             $loader->classMap = ComposerStaticInit3062d8d98078e72c9f1d44a3907354e8::$classMap;
 
         }, null, ClassLoader::class);

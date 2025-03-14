@@ -16,15 +16,19 @@ return [
         "PUT" => function ($dados) use ($produtoRepositorio){
             $produto = new Produto($dados["id"] , $dados["nome"] , $dados["codigo"], $dados["preco"]);
             $linhasAfetadas = $produtoRepositorio->alterar($produto);
-            respostaJson(false , "Produto alterado com sucesoo" , 200 , $linhasAfetadas );
+            respostaJson(false , "Produto alterado com sucesso" , 200 , $linhasAfetadas );
         }
     ], 
     "/produto/:id"  => [
         "GET" => function ($dados) use ($produtoRepositorio){
-
+            $id = $dados["id"];
+            $produto = $produtoRepositorio->obterPeloId($id);
+            respostaJson(false, "" , 200, $produto);
         }
         , "DELETE" => function($dados) use ($produtoRepositorio){
-            
+            $id = $dados["id"];
+            $idExcluido = $produtoRepositorio->excluirPeloId($id);
+            respostaJson(false , "Produto excluido com sucesso" , 200,  $idExcluido);
         }
     ]
 ]

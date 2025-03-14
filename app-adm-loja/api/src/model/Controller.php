@@ -10,7 +10,7 @@ class Controller {
        $this->conexao = $conexao;
     }
 
-
+  
     public function executar($sql , $msgErro ,$parametros = []):PDOStatement{
          try{
              
@@ -24,10 +24,6 @@ class Controller {
          }
     
 }
-
-  public function getConexao():PDO{
-    return $this->conexao;
-  }
 
 }
 
