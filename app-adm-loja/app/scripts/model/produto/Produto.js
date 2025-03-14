@@ -37,7 +37,7 @@ export default class Produto{
     validar(){
         if(nome.length <= 1) this.#problemas.push("Nome inválido");
         if(typeof this.preco != "number" ||  this.preco  <= 0) this.#problemas.push("Preço inválido");
-        if(typeof this.codigo != "number" || this.codigo <= 10000) this.#problemas.push("Código inválido");
+        if(typeof this.codigo != "number" || this.codigo <= 0) this.#problemas.push("Código inválido");
     }
     
     /**

@@ -21,7 +21,9 @@ return [
     ], 
     "/produto/:id"  => [
         "GET" => function ($dados) use ($produtoRepositorio){
-            $id = $dados["id"];
+            echo "rota executada";
+            [$id] = intval($dados);
+            echo "id: $id";
             $produto = $produtoRepositorio->obterPeloId($id);
             respostaJson(false, "" , 200, $produto);
         }

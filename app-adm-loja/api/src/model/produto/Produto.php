@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class Produto {
+class Produto implements JsonSerializable{
 
     private array $problemas = [];
 
@@ -32,6 +32,14 @@ class Produto {
       return $this->problemas; 
     }
     
+    public function jsonSerialize(): array{
+       return [
+        "id" => $this->id ,
+        "nome" => $this->nome,
+        "codigo" => $this->codigo,
+        "preco" => $this->preco
+       ];
+    }
 }
 
 ?> 

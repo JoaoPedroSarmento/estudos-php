@@ -41,7 +41,8 @@ export default class Repositorio{
    * @param {Function|null} cbSucesso
    */
   async excluir( id, cbErro, cbSucesso = null ) {
-    return await fazFetch("DELETE", configs.API + this.#rota + `/${id}`, cbErro, cbSucesso);
+    console.log(`id a ser excluído ${id}`)
+    return await fazFetch("DELETE", configs.API + this.#rota + `/${id}`, cbErro, cbSucesso, [id]);
   }
 
 

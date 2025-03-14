@@ -22,6 +22,7 @@ class Rota {
 
     public function executarRota( Array $rotas ) { 
         $rota =  $rotas[ $this->logica ][ $this->metodo ];
+
         if($rota){
                 try{
                     if( ! empty( $this->dados ) ) $rota( $this->dados );
