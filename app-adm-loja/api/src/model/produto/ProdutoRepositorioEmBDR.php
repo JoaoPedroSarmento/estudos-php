@@ -15,7 +15,7 @@ class ProdutoRepositorioEmBDR extends RepositorioEmBDR implements Repositorio {
 
   public function inserir(object $produto): int {
 
-    $sql = "INSERT INTO produto(nome , preco, codigo) VALUE(':nome' , ':preco' , ':codigo')";
+    $sql = "INSERT INTO produto(nome , preco, codigo) VALUE(:nome , :preco, :codigo)";
     $msgErro = "Erro ao inserir produto";
     $parametros = [
       "nome" => $produto->nome,
