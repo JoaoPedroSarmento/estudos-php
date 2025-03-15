@@ -1,6 +1,7 @@
 {
     "name": "root/api",
     "autoload": {
+        "psr-4": {
         "": [
             "src",
             "src/model",
@@ -9,6 +10,7 @@
             "src/excecoes"
 
         ]
+    }
     },
     "authors": [
         {

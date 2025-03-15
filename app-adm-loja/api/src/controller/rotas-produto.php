@@ -1,30 +1,33 @@
 <?php 
 
 $produtoRepositorio = new ProdutoRepositorioEmBDR($conexao);
-
+$controller = new Controller($produtoRepositorio);
 return [
     "/produto" => [
-        "GET" => function () use ($produtoRepositorio){
-            $produtos = $produtoRepositorio->obterTodos();
-            respostaJson(false , "Sucesso ao listar produtos" , 200 , $produtos);
+        "GET" => function () use ($controller ){
+            // global $controller;
+            $controller->get();
         } ,
-        "POST" => function ($dados) use ($produtoRepositorio){
+        "POST" => function ($dados) use ($controller){
+            // global $controller;
             $produto = new Produto(0, $dados["nome"], $dados["codigo"], $dados["preco"]);
-            $id = $produtoRepositorio->inserir($produto);
-            respostaJson(false , "Produto inserido com sucesso" , 200, $id);
+            $controller->post($produto);
         },  
-        "PUT" => function ($dados) use ($produtoRepositorio){
+        "PUT" => function ($dados) use ($controller){
+            // global $controller;
             $produto = new Produto($dados["id"] , $dados["nome"] , $dados["codigo"], $dados["preco"]);
-            $linhasAfetadas = $produtoRepositorio->alterar($produto);
-            respostaJson(false , "Produto alterado com sucesoo" , 200 , $linhasAfetadas );
+            
+            $controller->put($produto);
         }
     ], 
     "/produto/:id"  => [
-        "GET" => function ($dados) use ($produtoRepositorio){
-
+        "GET" => function ($dados) use ($controller){
+         // global $controller;
+         // $controller->get($dados[0]);
+         $controller->get($dados[0]);
         }
-        , "DELETE" => function($dados) use ($produtoRepositorio){
-            
+        , "DELETE" => function($dados) use ($controller){
+            $controller->delete($dados[0]);
         }
     ]
 ]

@@ -12,5 +12,4 @@ $logica = obterLogica();
 $conexao = getConexao();
 
 
-
 ?> 

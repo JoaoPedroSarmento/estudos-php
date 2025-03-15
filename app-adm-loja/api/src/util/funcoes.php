@@ -23,10 +23,12 @@ function getConexao():PDO{
 }
 
 
+
 function respostaJson(bool $erro, string $msg, int $codeStatus , $dados = null){   
        header("Content-type: application/json;charset=utf-8");
        die(json_encode(["erro" => $erro  , "msg" => $msg , "status" => $codeStatus , "dados" => $dados]));
 }
+
 
 function obterLogica():string{
     // url = app-adm-loja/produto (ex: get)
