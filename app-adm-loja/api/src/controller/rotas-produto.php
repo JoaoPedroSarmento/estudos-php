@@ -24,6 +24,7 @@ return [
         "GET" => function ($dados) use ($controller){
          // global $controller;
          // $controller->get($dados[0]);
+
          $controller->get($dados[0]);
         }
         , "DELETE" => function($dados) use ($controller){

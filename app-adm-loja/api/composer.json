@@ -4,18 +4,18 @@
         "psr-4": {
         "": [
             "src",
-            "src/model",
-            "src/util",
             "src/controller", 
-            "src/excecoes"
+            "src/excecoes",
+            "src/model",
+            "src/model/produto",
+            "src/util"
 
         ]
     }
     },
     "authors": [
         {
-            "name": "João Sarmento",
-            "email": "joaomoraes@dzaine.net"
+            "name": "João Sarmento"
         }
     ],
     "require": {}

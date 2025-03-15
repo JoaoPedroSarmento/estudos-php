@@ -11,26 +11,28 @@ class Controller {
       return empty($objeto->getProblemas());
     }
 
-    public function get(?int $id):void{
+    public function get(?int $id = null):void{
        if($id){
          $dado = $this->repositorioEmBDR->obterPeloId($id);
          respostaJson(false , "Dado obtido com sucesso!" , 200  , $dado);
        } 
        $dados = $this->repositorioEmBDR->obterTodos();
-       respostaJson(false , "Dados obtidos com sucesso!" , $dados);
+
+       respostaJson(false , "Dados obtidos com sucesso!" , 200 ,$dados);
     }
 
    public function post(object $objeto):void{
-      if($this->validarObjeto($objeto)){
-        $ultimoId = $this->repositorioEmBDR->inserir($objeto);
-        respostaJson(false, "Dado inserido com sucesso" , 200 , $ultimoId);
+      if(!$this->validarObjeto($objeto)){
+        respostaJson(true , "Erro ao inserir dados" , 500);
       }
-      respostaJson(true , "Erro ao inserir dados" , 500);
+
+      $ultimoId = $this->repositorioEmBDR->inserir($objeto);
+      respostaJson(false, "Dado inserido com sucesso" , 200 , $ultimoId);
    }
 
 
    public function put( object $object ): void {
-    if($this->validarObjeto($object))
+    if(!$this->validarObjeto($object))
         respostaJson( false, "Erro ao efetuar alteração - DADOS INVÁLIDOS", 500, $object->getProblemas());
     $this->repositorioEmBDR->alterar( $object );
     respostaJson( false, "Alteração efetuada com sucesso!", 200 );

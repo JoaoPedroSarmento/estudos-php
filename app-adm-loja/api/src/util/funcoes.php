@@ -12,11 +12,12 @@ const OPCOES = [
 function getConexao():PDO{
     
     $dns = "mysql:dbname=adm_loja;host=localhost;charset=utf8";
+    $pdo = null;
 
     try{
        $pdo = new PDO($dns , "root" , "" , OPCOES);
     }catch(PDOException $e){
-        
+        respostaJson(true , "Erro ao realizar conexao" , 500 , $e);
     }
 
     return $pdo;

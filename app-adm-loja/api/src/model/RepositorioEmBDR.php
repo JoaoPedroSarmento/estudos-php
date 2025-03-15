@@ -24,20 +24,21 @@ class RepositorioEmBDR {
 
 
 
-    protected function carregarObjetosDaClasse(string $sql, string $classe, array $parametros = [], ?string $msgExcecao = null): array {
+    protected function carregarObjetosDaClasse(string $sql, string $classe, array $parametros = [], ?string $msgErro = null): array {
         try {
             $ps = $this->conexao->prepare($sql);
+        
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $classe);
             $ps->execute($parametros);
             return $ps->fetchAll();
         } catch (PDOException $erro) {
-            throw new RuntimeException($msgExcecao ?? $erro->getMessage(), intval($erro->getCode()), $erro);
+            throw new RuntimeException($msgErro ?? $erro->getMessage(), intval($erro->getCode()), $erro);
         }
     }
 
 
-    protected function primeiroObjetoDaClasse(string $sql, string $classe, array $parametros, ?string $msgExcecao = null): ?object {
-        $objetos = $this->carregarObjetosDaClasse($sql, $classe, $parametros, $msgExcecao);
+    protected function primeiroObjetoDaClasse(string $sql, string $classe, array $parametros, ?string $msgErro = null): ?object {
+        $objetos = $this->carregarObjetosDaClasse($sql, $classe, $parametros, $msgErro);
         return (count($objetos) > 0 ? $objetos[0] : null);
     }
 
@@ -73,7 +74,7 @@ class RepositorioEmBDR {
 
 
     public function buscar(string $sql, string $msgErro, string $classe, array $parametros = []): object {
-         return $this->primeiroObjetoDaClasse($sql , $classe , $parametros);
+         return $this->primeiroObjetoDaClasse($sql , $classe , $parametros, $msgErro);
     }
 
 
