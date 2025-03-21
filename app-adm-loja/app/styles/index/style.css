@@ -1,0 +1,26 @@
+    @import url("../global.css");
+
+    body{
+        background-color: #232323;
+        color: #fff;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: #333;
+    }
+    
+    th, td {
+        padding: 10px;
+        border: 1px solid #555;
+        text-align: left;
+    }
+    
+    th {
+        background: #444;
+    }
+    
