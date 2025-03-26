@@ -1,8 +1,6 @@
-export default class Produto{
-    /**
-     * @type {Array<string>}
-     */
-    #problemas = [];
+import Validavel from "../Validavel.js";
+
+export default class Produto extends Validavel{
     /**
      * @type {number}
      */
@@ -35,16 +33,9 @@ export default class Produto{
      * @returns {void}
      */
     validar(){
-        if(nome.length <= 1) this.#problemas.push("Nome inválido");
-        if(typeof this.preco != "number" ||  this.preco  <= 0) this.#problemas.push("Preço inválido");
-        if(typeof this.codigo != "number" || this.codigo <= 0) this.#problemas.push("Código inválido");
-    }
-    
-    /**
-     * @returns {Array<string>}
-     */
-    getProblemas(){
-        return this.#problemas;     
+        if(nome.length <= 1) this._problemas.push("Nome inválido");
+        if(typeof this.preco != "number" ||  this.preco  <= 0) this._problemas.push("Preço inválido");
+        if(typeof this.codigo != "number" || this.codigo <= 0) this._problemas.push("Código inválido");
     }
 
 }
