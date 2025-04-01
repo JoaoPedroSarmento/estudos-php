@@ -5,7 +5,9 @@ import configs from "./configs.js";
 
 
 (async () => {
+  const gestorProduto = new GestorProduto();
 
+ gestorProduto.listar("Erro ao listar produtos"  , "Sucesso ao listar produtos" , true);
 })()
 
 

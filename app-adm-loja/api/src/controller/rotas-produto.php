@@ -21,7 +21,8 @@ return [
     ], 
     "/produto/:id"  => [
         "GET" => function ($dados) use ($gestor){
-            $id = (int) $dados[0];
+            $id = (int) $dados[0] ?? null;
+            if(!$id) respostaJson(true , "Erro ao buscar ID!" , 400);
             $produto = $gestor->produtoComId($id);     
             respostaJson(false, "Produto encontrado com sucesso" , 200, $produto);
         }

@@ -22,5 +22,5 @@ declare(strict_types=1);
         if (isset($rotas[$logica])) $rota->executarRota($rotas);
     }
     
-    if(!$rota->rotaEncontrada) respostaJson(true , "Rota não encontrada!" , 500 );
+    if(!$rota->rotaEncontrada) respostaJson(true , "Rota não encontrada!" , 400);
 ?>
