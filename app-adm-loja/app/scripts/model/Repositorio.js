@@ -6,6 +6,7 @@ export default class Repositorio{
     #rota;
 
    constructor(rota){
+    console.log("ROTA" , this.#rota)
         this.#rota = rota;
    }
   
