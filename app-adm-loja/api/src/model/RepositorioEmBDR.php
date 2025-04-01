@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+/**
+ * Executa código sql
+ */
 abstract class RepositorioEmBDR {
     
     private PDO $conexao;

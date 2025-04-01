@@ -2,7 +2,12 @@
 
 declare(strict_types=1);
 
-
+/**
+ * 
+ * ProdutoRepositorioEMBDR tem objetivo de preparar o sql, msg de erro caso tenha, parametros enviados para o SQL e retornar em cada método algo refernente a reposta da conexao
+ * com isso chamamos métodos do RepositorioEmBDR para executar o sql e retornar uma resposta referente a conexao
+ * 
+ * */
 final class ProdutoRepositorioEmBDR extends RepositorioEmBDR implements Repositorio{
       
     public function obterTodos ():array {
