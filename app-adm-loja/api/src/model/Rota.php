@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
-
-class Rota {
+error_reporting(E_ALL);
+final class Rota {
     private string $logica;
     private string $metodo;
     private array $parametros;
     private Requisicao $req;
     private Array $dados;
-
+    public bool $rotaEncontrada = false;
+    
     public function __construct( Array $server , Array $dados ){
         $this->req = new Requisicao( $server );
         $this->logica = $this->req->getLogica();
@@ -22,7 +23,7 @@ class Rota {
 
     public function executarRota( Array $rotas ) { 
         $rota =  $rotas[ $this->logica ][ $this->metodo ];
-
+        $this->rotaEncontrada = true;
         if($rota){
                 try{
                     if( ! empty( $this->dados ) ) $rota( $this->dados );

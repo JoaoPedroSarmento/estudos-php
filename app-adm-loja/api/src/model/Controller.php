@@ -1,30 +1,51 @@
 <?php 
 declare(strict_types=1);
 
-class Controller {   
+final class Controller {   
     
-    private PDO $conexao;
+    private object $repositorio;
 
 
-    public function __construct(PDO $conexao) {
-       $this->conexao = $conexao;
+    public function __construct(object $repositorio) {
+       $this->repositorio = $repositorio;
     }
 
-  
-    public function executar($sql , $msgErro ,$parametros = []):PDOStatement{
-         try{
-             
-             $ps = $this->conexao->prepare($sql);
-             $ps->execute($parametros);
-             
-             return $ps;
+    public function get( ?int $id = null, ?string $msgErro = null ) {     
+        if( ! $id ) {
+            return $this->repositorio->obterTodos();
+        }
+        else if( $this->repositorio->existeComId( $id ) ) {
+            return $this->repositorio->obterPeloId( $id );
+        }
+        throw new RuntimeException( $msgErro ? $msgErro . " - Registro não encontrado" : "Erro ao buscar informações - Registro não encontrado.", 400 );
+    }
 
-         }catch(PDOException $e){
-              respostaJson(true , $msgErro , 500);
-         }
-    
+
+    public function post( Validavel $object, ?string $msgErro = null ): int {
+        $object->validar();
+        $problemas = $object->getProblemas();
+        if( ! empty( $problemas ) ) 
+            throw new EntradaInvalidaException( $msgErro ? $msgErro . " - Dados Inválidos" : "Erro ao cadastrar informações - Dados Inválidos", 500, $problemas );
+        return $this->repositorio->inserir( $object );
+    } 
+
+
+    public function put( Validavel $object, ?string $msgErro = null ): int {
+        $object->validar();
+        $problemas = $object->getProblemas();
+        if( ! empty( $problemas ) ) 
+            throw new EntradaInvalidaException( $msgErro ? $msgErro . " - Dados Inválidos" :  "Erro ao alterar informações - Dados inválidos", 500, $problemas );
+         $this->repositorio->alterar( $object );
+         return 1;
+    }
+
+
+    public function delete( int $id, ?string $msgErro = null ): int {
+        if( ! $this->repositorio->excluirPeloId( $id ) )
+            throw new RuntimeException( $msgErro ? $msgErro . " - Registro não encontrado" : "Registro não encontrado.", 400 );
+        return 1;
+    }
 }
 
-}
 
 ?>

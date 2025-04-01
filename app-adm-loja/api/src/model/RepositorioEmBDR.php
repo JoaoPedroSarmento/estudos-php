@@ -2,89 +2,59 @@
 
 declare(strict_types=1);
 
-
-class RepositorioEmBDR {
+abstract class RepositorioEmBDR {
     
-    private Controller $controller;
     private PDO $conexao;
 
     public function __construct(PDO $conexao){
-        $this->controller = new Controller($conexao);
         $this->conexao = $conexao;
     }
 
+    
+    protected function carregarObjetosDaClasse( string $sql, string $classe, ?string $msgErro = null  , array $parametros = []):array {
 
-    private function carregarObjetosDaClasse(string $sql , string $msgErro, $classe , array $parametros = []):array{
-        try{
-         $ps =  $this->conexao->prepare($sql);
-         $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE , $classe);
-         
-         $ps->execute($parametros);
-         return $ps->fetchAll();   
-
-        }catch(PDOException $e){
-            throw new RepositorioException($msgErro);
+        try {
+            $ps = $this->conexao->prepare( $sql );
+            $ps->setFetchMode( PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $classe );
+            $ps->execute( $parametros );
+            return $ps->fetchAll();
+        }
+        catch ( PDOException $erro ) {
+            throw new RuntimeException( $msgErro ?? $erro->getMessage(), 500, $erro );
         }
     }
     
-    private function  carregaPrimeiroObjetoDaClasse(string $sql , string $msgErro , $classe , array $parametros = []):object{ 
-        return $this->carregarObjetosDaClasse($sql ,$msgErro , $classe , $parametros)[0];
+
+    protected function primeiroObjetoDaClasse( string $sql, string $classe, array $parametros, ?string $msgErro = null ): ?object {
+        $objetos = $this->carregarObjetosDaClasse( $sql, $classe, $msgErro , $parametros);
+        return ( count( $objetos ) > 0 ? $objetos[ 0 ] : null );
     }
 
 
-    public function get(string $sql , string $msgErro):array{
-        $ps = $this->controller->executar($sql, $msgErro);
-        return $ps->fetchAll();
-    }
-
-
-    public function post( string $sql , string $msgErro, object $objeto ,array $parametros = []):int{   
-        $objeto->validar();
-
-        if(count($objeto->getProblemas()) > 0) {
-           throw new RepositorioException($objeto->getProblemas());
+    protected function removerRegistroComId(int $id, string $tabela, ?string $msgErro = null ): bool {
+        try {
+            $ps = $this->conexao->prepare( "DELETE FROM $tabela WHERE id = :id" );
+            $ps->execute( [ 'id' => $id ] );
+            return $ps->rowCount() > 0;
         }
+        catch ( PDOException $erro ) {
+            throw new RuntimeException( $msgErro ?? $erro->getMessage(), 500, $erro );
+        }
+    }
+
+  
+protected function executar($sql , $msgErro ,$parametros = []):PDOStatement{
+    try{
         
-        $this->controller->executar($sql , $msgErro, $parametros);  
-        return intval($this->conexao->lastInsertId());
+        $ps = $this->conexao->prepare($sql);
+        $ps->execute($parametros);
+        
+        return $ps;
+
+    }catch(PDOException $e){
+         respostaJson(true , $msgErro , 500);
     }
-
-
-    public function put(string $sql , string $msgErro, object $objeto , array $parametros = []):int{
-        $objeto->validar();
-
-        if(count($objeto->getProblemas()) > 0) {
-           throw new RepositorioException($objeto->getProblemas());
-        }
-
-
-        $ps = $this->controller->executar($sql , $msgErro , $parametros);
- 
-        $linhasAlteradas = $ps->rowCount();
-    
-        if(!$linhasAlteradas){
-          respostaJson(true , "Erro ao encontrar produto" , 500);
-        } return $ps->rowCount();
 }
-
-
-public function delete(string $sql , string $msgErro, array $parametros = []){
-    $ps = $this->controller->executar($sql , $msgErro , $parametros);
-    return intval($ps->rowCount());
-}
-
-
-
-public function buscar(string $sql, string $msgErro, string $classe, array $parametros = []):object {
-    return $this->carregaPrimeiroObjetoDaClasse($sql , $msgErro , $classe , $parametros);
-}
-
-
-public function existe(string $sql, string $msgErro, array $parametros = []){
-    $ps = $this->controller->executar($sql , $msgErro, $parametros);
-    return $ps->rowCount() > 0;
-}
-
 
 }
 ?>

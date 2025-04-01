@@ -1,13 +1,14 @@
 import mensagem from "./mensagem.js";
 
-function fazFetch(metodo, url, cbErro, cbSucesso = null, dados = null) {
+function fazFetch(metodo, url, cbErro = null, cbSucesso = null, dados = null) {
   let configMetodo = trataMetodo(metodo, dados);
-
+   
   const meuFetch = fetch(url, configMetodo)
     .then((resposta) => verificaErro(resposta))
     .then(async (resposta) => {
     const resp = await resposta.json();
-      if (resp.erro) cbErro(resp);
+
+      if (resp.erro && cbErro) cbErro(resp);
       else if (cbSucesso) cbSucesso(resp);
       return resp;
     })

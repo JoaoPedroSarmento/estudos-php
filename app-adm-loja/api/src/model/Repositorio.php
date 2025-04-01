@@ -20,14 +20,14 @@ interface Repositorio{
        * 
        */
 
-       public function alterar(Object $objeto):int;
+       public function alterar(Object $objeto):bool;
 
        /**
         * 
 
         */
 
-        public function excluirPeloId(int $id):int;
+        public function excluirPeloId(int $id):bool;
 
         /**
          * 

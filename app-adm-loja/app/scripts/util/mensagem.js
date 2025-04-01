@@ -8,6 +8,5 @@ export default  function mensagem(msg ,classe){
         msgElem.textContent = "";
         msgElem.className = null;
     }, 5000);
-
-    
+   
 }

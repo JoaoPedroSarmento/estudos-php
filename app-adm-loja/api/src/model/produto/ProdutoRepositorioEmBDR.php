@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 
-class ProdutoRepositorioEmBDR extends RepositorioEmBDR implements Repositorio{
+final class ProdutoRepositorioEmBDR extends RepositorioEmBDR implements Repositorio{
       
     public function obterTodos ():array {
        $sql = "SELECT * FROM produto";
        $msgErro = "Erro ao listar produtos!";
-       return $this->get($sql , $msgErro);
+       return $this->carregarObjetosDaClasse($sql , Produto::class, $msgErro);
     }
 
     public function inserir(object $produto): int{
@@ -21,11 +21,13 @@ class ProdutoRepositorioEmBDR extends RepositorioEmBDR implements Repositorio{
         "codigo" => $produto->codigo
       ];
 
-      return $this->post($sql , $msgErro ,  $produto, $parametros);
+      $this->executar($sql , $msgErro , $parametros);
+
+      return 1;
     }
 
 
-    public function alterar(object $produto):int {
+    public function alterar(object $produto):bool {
        $sql = "UPDATE produto SET nome = :nome , preco = :preco , codigo = :codigo WHERE id = :id";
        $msgErro = "Erro ao alterar produto";
        $parametros = [
@@ -35,17 +37,18 @@ class ProdutoRepositorioEmBDR extends RepositorioEmBDR implements Repositorio{
         "codigo" => $produto->codigo,
        ];
 
-     return $this->put($sql , $msgErro , $produto , $parametros);
+     $ps =  $this->executar($sql , $msgErro , $parametros);
+     return $ps->rowCount() > 0;
 }
 
-public function excluirPeloId(int $id):int{
+public function excluirPeloId(int $id):bool{
   $sql = "DELETE FROM produto WHERE id = :id";
   $msgErro = "Erro ao excluir produto";
   $parametros =  [
     "id" => $id
   ];
 
-   return $this->delete($sql ,$msgErro , $parametros);
+   return $this->removerRegistroComId($id , Produto::class,$msgErro);
 
 }
 
@@ -56,7 +59,7 @@ public function obterPeloId(int $id):object{
   $parametros = [
     "id" => $id
   ];
-  return $this->buscar($sql , $msgErro , "Produto" , $parametros);
+  return $this->primeiroObjetoDaClasse($sql , Produto::class, $parametros , $msgErro);
 }
 
 
@@ -66,7 +69,10 @@ public function existeComId(int $id):bool{
   $parametros = [
     "id" => $id
   ];
-  return $this->existe($sql , $msgErro , $parametros);
+  $produto =  $this->primeiroObjetoDaClasse($sql ,  Produto::class ,  $parametros, $msgErro);
+  
+  return $produto !== null;
+  
 }
 
 }

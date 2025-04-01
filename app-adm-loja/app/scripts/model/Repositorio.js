@@ -10,7 +10,6 @@ export default class Repositorio{
    }
   
    async obterTodos(cbErro, cbSucesso = null) {
-
     return await fazFetch("GET", configs.API + this.#rota, cbErro, cbSucesso);
   }
 
