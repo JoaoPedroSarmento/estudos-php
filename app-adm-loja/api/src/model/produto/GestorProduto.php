@@ -23,7 +23,7 @@ final class GestorProduto extends Gestor{
 
 
     public function cadastrar(array $dados):bool{
-        if(!$this->validarDados([$dados["nome"], $dados["codigo"], $dados["preco"]])) respostaJson(true , "Parâmetros inválidos!" , 400);
+        // if(!$this->validarDados([$dados["nome"], $dados["codigo"], $dados["preco"]])) respostaJson(true , "Parâmetros inválidos!" , 400);
         $produto = new Produto(0, $dados["nome"], $dados["codigo"], $dados["preco"]);
         return $this->controller->post($produto , "Erro ao inserir produto!");
     }
