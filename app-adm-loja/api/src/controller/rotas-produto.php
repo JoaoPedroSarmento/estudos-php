@@ -27,7 +27,7 @@ return [
             respostaJson(false, "Produto encontrado com sucesso" , 200, $produto);
         }
         , "DELETE" => function($dados) use ($gestor){
-            $id = $dados["id"] ??  null;
+            $id = $dados[0] ??  null;
             if(!$id) respostaJson(true , "Erro ao obter ID!" , 400);
             $idExcluido = $gestor->removerComId($id);
             respostaJson(false , "Produto excluido com sucesso" , 200,  $idExcluido);

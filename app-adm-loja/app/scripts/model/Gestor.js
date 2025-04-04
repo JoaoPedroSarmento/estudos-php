@@ -1,4 +1,5 @@
 import Validavel from "./Validavel.js";
+import ErrorEnviarDados from "../excecoes/ErrorEnviarDados.js";
 export default class Gestor {
   #objetoRepositorio;
   fcSucesso;
@@ -45,11 +46,11 @@ export default class Gestor {
     );
   }
 
-  async buscar(id, msgErro, msgSucesso) {
+  async buscar(id, msgErro, msgSucesso, temFuncao = true) {
     return await this.#objetoRepositorio.buscar(
       id,
-      () => this.fcErro(msgErro),
-      (resp) => this.fcSucesso(msgSucesso, "buscar", resp)
+      () => !temFuncao? null : this.fcErro(msgErro),
+      (resp) =>!temFuncao? null : this.fcSucesso(msgSucesso, "buscar", resp)
     );
   }
 
