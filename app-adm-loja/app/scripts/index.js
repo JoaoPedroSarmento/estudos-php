@@ -3,6 +3,7 @@ import Produto from "./model/produto/Produto.js";
 import GestorWorker from "./model/worker/GestorWorker.js";
 import configs from "./configs.js";
 import Modal from "./model/Modal.js";
+import { form } from "./model/produto/util-produto.js";
 
 
 (async () => {
@@ -13,7 +14,7 @@ const modal = new Modal("modal-backdrop" , "modal-form");
 modal.ativarFuncoes();
 
 gestorProduto.listar("Erro ao listar produtos"  , "Sucesso ao listar produtos" , true);
-
+form(null , gestorProduto, modal);
 //  gestorProduto.buscar(10012 , "Erro ao buscar produto!" , "Sucesso ao buscar produto!" , true);
 
 

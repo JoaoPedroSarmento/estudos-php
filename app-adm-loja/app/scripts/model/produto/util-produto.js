@@ -47,7 +47,12 @@ function* geradorLinhas(dados, maxLinhas) {
 
 
 
-function inserir(resp) {}
+function inserir(resp, gestorProduto) {
+  gestorProduto.listar(
+    "Erro ao listar Produtos",
+    "Sucesso ao listar produtos!"
+  );
+}
 
 
 function excluir(resp, gestorProduto) {
@@ -57,8 +62,12 @@ function excluir(resp, gestorProduto) {
   );
 }
 
-function alterar(resp){
+function alterar(resp, gestorProduto){
   mensagem("Produto alterado com sucesso!" , "sucesso");
+  gestorProduto.listar(
+    "Erro ao listar Produtos",
+    "Sucesso ao listar produtos!"
+  );
 }
 
 function listar({ dados }, gestorProduto) {
@@ -132,9 +141,13 @@ function editarExcluirProduto(gestorProduto) {
   document.getElementById("tabela-produtos").onclick = (e) => {
     const elem = e.target;
     const id = elem[propsPrivadas.id] ?? null;
+    const modal = new Modal("modal-backdrop", "modal-form");
 
     if (elem?.textContent.toLowerCase() == "editar") {
-      form(id, gestorProduto);
+      form(id, gestorProduto, modal);
+      modal.abrirModal()
+      modal.ativarFuncoes();
+
     } else if (elem?.textContent.toLowerCase() == "excluir") {
       if (confirm(`Deseja excluir o produto de id ${id}?`)) {
         gestorProduto.excluir(
@@ -147,11 +160,8 @@ function editarExcluirProduto(gestorProduto) {
   };
 }
 
-async function form(id , gestorProduto) {
+async function form(id , gestorProduto , modal) {
 
-const modal = new Modal("modal-backdrop", "modal-form");
-modal.ativarFuncoes();
-modal.abrirModal()
 
 
 const nome = document.getElementById("modal-nome");
@@ -181,7 +191,6 @@ if(id){
       } else {
         const produto = new Produto(nome.value, +preco.value, +codigo.value);
         const inserir =  await gestorProduto.inserir(produto , "Erro ao inserir produto!" , "Sucesso ao inserir produto!")
-
         if(inserir){
           modal.fecharModal();
         }else{
@@ -193,4 +202,4 @@ if(id){
 
   } ;
 }
-export { fcSucesso, fcErro };
+export { fcSucesso, fcErro , form };
