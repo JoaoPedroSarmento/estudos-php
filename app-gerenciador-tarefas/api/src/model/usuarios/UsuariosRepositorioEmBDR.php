@@ -1,0 +1,75 @@
+<?php 
+
+declare(strict_types=1);
+
+
+final class UsuariosRepositorioEmBDR extends RepositorioEmBDR implements RepositorioUsuarios{
+      
+
+    public function inserir(Usuarios $u): int{
+
+      $sql = "INSERT INTO usuarios(nome , email, senha) VALUE(:nome , :email , :senha)";
+      $msgErro = "Erro ao inserir produto!";
+      $parametros = [
+        "nome" => $u->nome , 
+        "email" => $u->email , 
+        "senha" => $u->senha
+      ];
+
+      $this->executar($sql , $msgErro , $parametros);
+
+      return 1;
+    }
+
+
+    public function alterar(Usuarios $u):bool {
+       $sql = "UPDATE usuarios SET nome = :nome , email = :email , senha = :senha WHERE id = :id";
+       $msgErro = "Erro ao alterar produto!";
+       $parametros = [
+        "id" => $u->id,
+        "nome" => $u->nome , 
+        "email" => $u->email , 
+        "senha" => $u->senha,
+       ];
+
+     $ps =  $this->executar($sql , $msgErro , $parametros);
+     return $ps->rowCount() > 0;
+}
+
+public function excluirPeloId(int $id):bool{
+
+  $msgErro = "Erro ao excluir perfil!";
+
+  return $this->removerRegistroComId($id , Usuarios::class,$msgErro);
+
+}
+
+
+public function obterPeloId(int $id):?Usuarios{
+  $sql = "SELECT * FROM usuarios WHERE id = :id";
+  $msgErro = "Senha incorreta!";
+  $parametros = [
+    "id" => $id,
+  ];
+  
+ $usuario =  $this->primeiroObjetoDaClasse($sql , Usuarios::class, $parametros , $msgErro);
+  
+ return $usuario;
+}
+
+
+public function existeComId(int $id):bool{
+  $sql = "SELECT * FROM usuarios WHERE id = :id";  
+  $msgErro = "Erro ao encontrar perfil!";
+  $parametros = [
+    "id" => $id
+  ];
+  $produto =  $this->primeiroObjetoDaClasse($sql ,  Usuarios::class ,  $parametros, $msgErro);
+  
+  return $produto !== null;
+  
+}
+
+}
+
+?> 

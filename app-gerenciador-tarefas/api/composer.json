@@ -1,0 +1,21 @@
+{
+    "name": "root/app-gerenciador-tarefas",
+    "autoload": {
+        "psr-4":  {
+        "": [
+            "src",
+            "src/controller",
+            "src/excecoes",
+            "src/model",
+            "src/model/usuarios",
+            "src/util"
+        ]
+        }
+    },
+    "authors": [
+        {
+            "name": "João Sarmento"
+        }
+    ],
+    "require": {}
+}
