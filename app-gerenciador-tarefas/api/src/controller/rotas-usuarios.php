@@ -28,13 +28,16 @@ return [
         , "DELETE" => function($dados) use ($gestor){
             $id = $dados[0] ??  null;
             $senha = (string) $dados["senha"];
+            
             if(!$id) respostaJson(true , "Erro ao obter ID!" , 400);
             $idExcluido = $gestor->removerComId($id , $senha);
+            
             if($idExcluido) respostaJson(false, "Perfil excluído com sucesso" , 200, $idExcluido);
-            else respostaJson(false, "Senha incorreta" , 400);
+            respostaJson(false, "Senha incorreta" , 400);
         },
         "PUT" => function ($dados) use ($gestor){
             $linhasAfetadas = $gestor->alterar($dados);
+            
             if($linhasAfetadas) respostaJson(false , "Perfil alterado com sucesso" , 200 , $linhasAfetadas );
             respostaJson(true , "Senha incorreta!" , 400);
         }
