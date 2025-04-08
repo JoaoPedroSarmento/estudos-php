@@ -2,11 +2,11 @@
 
 interface RepositorioUsuarios{
     
-    public function inserir(Usuarios $u):int;
+    public function inserir(Usuario $u):int;
 
-    public function alterar(Usuarios $u):bool;
+    public function alterar(Usuario $u):bool;
 
-    public function obterPeloId(int $id):?Usuarios;
+    public function obterPeloId(int $id):?Usuario;
 
     public function excluirPeloId(int $id):bool;
 

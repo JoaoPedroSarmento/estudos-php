@@ -6,15 +6,14 @@ final class Rota {
     private string $metodo;
     private array $parametros;
     private Requisicao $req;
-    private Array $dados;
+    public Array $dados;
     public bool $rotaEncontrada = false;
     
-    public function __construct( Array $server , Array $dados ){
+    public function __construct( Array $server){
         $this->req = new Requisicao( $server );
         $this->logica = $this->req->getLogica();
         $this->metodo = $this->req->getMetodo();
         $this->parametros = $this->req->getParametros();
-        $this->dados = $dados;
     }
 
     public function getMetodo(){

@@ -41,17 +41,17 @@ function obterLogica(array &$dados):string{
     
     $logica = "/$arrayRota[1]";
     // ["/" , "produto" , "/" "1"]
+
     if(count($arrayRota) > 2){
         for( $i = 2; $i < count( $arrayRota ); $i++ ) {
             if( ! is_numeric( $arrayRota[$i] ) )
                 $logica .= "/".$arrayRota[$i];
             else {
-                $dados[] = (int) $arrayRota[$i];
+                array_unshift($dados , (int) $arrayRota[$i]);
                 $logica .= "/:id";
             }
         }
     }
-    
     return $logica;
 }
 

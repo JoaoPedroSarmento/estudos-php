@@ -11,6 +11,10 @@ abstract class Validavel{
     public function getProblemas():array{
         return $this->problemas;
     }
+
+    public function getProblemasString():string{
+        return implode("," , $this->problemas);
+    }
 }
 
 ?>

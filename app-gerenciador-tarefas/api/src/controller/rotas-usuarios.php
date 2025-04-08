@@ -4,6 +4,7 @@
 
 $gestor = new GestorUsuarios($conexao);
 
+
 return [
     "/usuarios" => [
         "POST" => function ($dados) use ($gestor){
@@ -14,7 +15,6 @@ return [
     ], 
     "/usuarios/:id"  => [
         "GET" => function ($dados) use ($gestor){
-            
             $id = (int) $dados[0] ?? null;
             $senha = (string) $dados["senha"];
             
@@ -26,9 +26,11 @@ return [
             else respostaJson(false, "Senha incorreta" , 404);
         }
         , "DELETE" => function($dados) use ($gestor){
+
             $id = $dados[0] ??  null;
             $senha = (string) $dados["senha"];
             
+
             if(!$id) respostaJson(true , "Erro ao obter ID!" , 400);
             $idExcluido = $gestor->removerComId($id , $senha);
             
@@ -37,7 +39,7 @@ return [
         },
         "PUT" => function ($dados) use ($gestor){
             $linhasAfetadas = $gestor->alterar($dados);
-            
+
             if($linhasAfetadas) respostaJson(false , "Perfil alterado com sucesso" , 200 , $linhasAfetadas );
             respostaJson(true , "Senha incorreta!" , 400);
         }

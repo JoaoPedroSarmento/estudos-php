@@ -41,7 +41,7 @@ CREATE TABLE
     usuario_time (
         usuario_id INT,
         time_id INT,
-        papel ENUM ('membro', 'lider') DEFAULT 'membro',
+        papel ENUM ('membro','lider') DEFAULT 'membro',
         PRIMARY KEY (usuario_id, time_id),
         FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE,
         FOREIGN KEY (time_id) REFERENCES times (id) ON DELETE CASCADE

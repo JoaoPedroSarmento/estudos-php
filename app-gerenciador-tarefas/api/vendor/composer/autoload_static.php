@@ -11,8 +11,9 @@ class ComposerStaticInitd3aa05a349a992d79ed35c68cd9cd7df
         1 => __DIR__ . '/../..' . '/src/controller',
         2 => __DIR__ . '/../..' . '/src/excecoes',
         3 => __DIR__ . '/../..' . '/src/model',
-        4 => __DIR__ . '/../..' . '/src/model/usuarios',
-        5 => __DIR__ . '/../..' . '/src/util',
+        4 => __DIR__ . '/../..' . '/src/model/times',
+        5 => __DIR__ . '/../..' . '/src/model/usuarios',
+        6 => __DIR__ . '/../..' . '/src/util',
     );
 
     public static $classMap = array (

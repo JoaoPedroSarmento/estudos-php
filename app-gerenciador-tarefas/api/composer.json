@@ -7,6 +7,7 @@
             "src/controller",
             "src/excecoes",
             "src/model",
+            "src/model/times",
             "src/model/usuarios",
             "src/util"
         ]

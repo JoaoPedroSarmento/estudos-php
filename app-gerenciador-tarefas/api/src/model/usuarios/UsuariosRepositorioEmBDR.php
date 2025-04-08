@@ -6,7 +6,7 @@ declare(strict_types=1);
 final class UsuariosRepositorioEmBDR extends RepositorioEmBDR implements RepositorioUsuarios{
       
 
-    public function inserir(Usuarios $u): int{
+    public function inserir(Usuario $u): int{
 
       $sql = "INSERT INTO usuarios(nome , email, senha) VALUE(:nome , :email , :senha)";
       $msgErro = "Erro ao inserir produto!";
@@ -22,7 +22,7 @@ final class UsuariosRepositorioEmBDR extends RepositorioEmBDR implements Reposit
     }
 
 
-    public function alterar(Usuarios $u):bool {
+    public function alterar(Usuario $u):bool {
        $sql = "UPDATE usuarios SET nome = :nome , email = :email , senha = :senha WHERE id = :id";
        $msgErro = "Erro ao alterar produto!";
        $parametros = [
@@ -40,19 +40,19 @@ public function excluirPeloId(int $id):bool{
 
   $msgErro = "Erro ao excluir perfil!";
 
-  return $this->removerRegistroComId($id , Usuarios::class,$msgErro);
+  return $this->removerRegistroComId($id , Usuario::class,$msgErro);
 
 }
 
 
-public function obterPeloId(int $id):?Usuarios{
+public function obterPeloId(int $id):?Usuario{
   $sql = "SELECT * FROM usuarios WHERE id = :id";
   $msgErro = "Senha incorreta!";
   $parametros = [
     "id" => $id,
   ];
   
- $usuario =  $this->primeiroObjetoDaClasse($sql , Usuarios::class, $parametros , $msgErro);
+ $usuario =  $this->primeiroObjetoDaClasse($sql , Usuario::class, $parametros , $msgErro);
   
  return $usuario;
 }
@@ -64,7 +64,7 @@ public function existeComId(int $id):bool{
   $parametros = [
     "id" => $id
   ];
-  $produto =  $this->primeiroObjetoDaClasse($sql ,  Usuarios::class ,  $parametros, $msgErro);
+  $produto =  $this->primeiroObjetoDaClasse($sql ,  Usuario::class ,  $parametros, $msgErro);
   
   return $produto !== null;
   
