@@ -9,8 +9,8 @@ final class TimesRepositorioEmBDR extends RepositorioEmBDR implements Repositori
     public function inserir(Time $t , UsuarioTime $uT): int{
 
     
-      $sql = "INSERT INTO times(nome , email, senha) VALUE(:nome , :descricao , :criado_em)";
-      $msgErro = "Erro ao inserir produto!";
+      $sql = "INSERT INTO times(nome , descricao, criado_em) VALUE(:nome , :descricao , :criado_em)";
+      $msgErro = "Erro ao inserir time!";
       $parametros = [
         "nome" => $t->nome , 
         "descricao" => $t->descricao, 
