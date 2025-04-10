@@ -5,9 +5,32 @@ final class GestorTimes extends Gestor
 
     public function __construct(PDO $conexao)
     {
-        parent::__construct($conexao, "TimesRepositorioEmBDR");
+        parent::__construct($conexao, "UsuarioTimeRepositorioEmBDR");
     }
 
+    public function obterPeloId(int $id, string $buscar): array
+    {
+        global $conexao;
+
+        // $usuariosTies = 
+        // listar os times da pessoa ou listar as pessosas do time
+        // listar as pessoas do time
+        $objetos =   $this->controller->get($id, "Erro ao listar");
+        $dados = [];
+        if ($buscar == "usuarios") {
+            // buscar usuarios
+            $repositorioUsuario = new UsuariosRepositorioEmBDR($conexao);
+            foreach ($objetos as $obj) {
+                $dados[] =  $repositorioUsuario->obterPeloId($obj->usuario_id);
+            }
+        } else {
+            $repositorioTime = new TimesRepositorioEmBDR($conexao);
+            foreach ($objetos as $obj) {
+                $dados[] =  $repositorioTime->obterPeloId($obj->time_id);
+            }
+        }
+        return $dados;
+    }
     public function timeComId(int $id): ?time
     {
         $time = $this->controller->get($id, "Usuário não encontrado!");
@@ -50,23 +73,28 @@ final class GestorTimes extends Gestor
 
         // verificar se usuario tem permissao para alterar
         // if(){
-            return $this->controller->put($time, "Erro ao alterar seus dados!");
+        return $this->controller->put($time, "Erro ao alterar seus dados!");
         // } else {
-            // return null;
+        // return null;
         // }
     }
 
 
-    public function removerComId(int $id, int $idUsuarioTime): ?int
-    {
-        // idUsuario (para verificar se é um lider e pode excluir)
+    public function removerComId(int $id, int $idUsuarioTime): ?int {
+        // idUsuario (para verificar se é um lider e pode excluir o usuario do time)
         // $usuarioTime->obterPeloId($idUsuario);
-        $time = $this->timeComId($id, $idUsuarioTime);
 
-        if ($time) {
-            return $this->controller->delete($id, "Erro ao excluir seu perfil!", $senha);
-        } else {
-            return null;
-        }
+        $liderTime = $this->obterPeloId($idUsuarioTime, true);
+
+        // Verifica se encontrou o líder e se o ID do líder corresponde ao idExcluidor
+        if (!empty($liderTime) && $liderTime[0]->usuario_id == $idUsuarioTime) {
+            $time = $this->timeComId($id, $idUsuarioTime);
+            
+            if ($time) {
+                return $this->controller->delete($id, "Erro ao excluir seu perfil!");
+            } else {
+                return null;
+            }
+        } return null;
     }
 }

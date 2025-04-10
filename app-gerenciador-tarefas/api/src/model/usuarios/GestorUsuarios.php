@@ -8,8 +8,7 @@ final class GestorUsuarios extends Gestor
         parent::__construct($conexao, "UsuariosRepositorioEmBDR");
     }
 
-    public function usuarioComId(int $id, string $senha): ?Usuario
-    {
+    public function usuarioComId(int $id, string $senha): ?Usuario {
         $usuario = $this->controller->get($id, "Usuário não encontrado!");
         if ($usuario->verificaSenha($senha)) {
             return $usuario;
@@ -62,11 +61,11 @@ final class GestorUsuarios extends Gestor
     }
 
 
-    public function removerComId(int $id, $senha): ?int
-    {
-        $usuario = $this->usuarioComId($id, $senha);
+    public function removerComId(int $id, $senha): ?int {
 
-        if ($usuario) {
+        $usuarioBanco = $this->usuarioComId($id, $senha);
+
+        if ($usuarioBanco) {
             return $this->controller->delete($id, "Erro ao excluir seu perfil!", $senha);
         } else {
             return null;

@@ -7,7 +7,7 @@ CREATE TABLE
         email VARCHAR(100) UNIQUE NOT NULL,
         senha VARCHAR(255) NOT NULL,
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        ativo BOOLEAN DEFAULT TRUE
+        ativo BOOLEAN DEFAULT TRUE,
     );
 
 -- Perfis de usuário (admin, membro, etc)

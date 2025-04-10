@@ -42,7 +42,7 @@ public function excluirPeloId(int $id , UsuarioTime $uT):bool{
 
   $msgErro = "Erro ao excluir Time!";
 
-  return $this->removerRegistroComId($id , Usuario::class,$msgErro);
+  return $this->removerRegistroComId($id , Usuario::class, $msgErro);
 
 }
 

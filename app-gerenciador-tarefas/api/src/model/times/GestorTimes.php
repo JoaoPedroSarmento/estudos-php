@@ -1,28 +1,23 @@
 <?php
 
-final class GestorTimes extends Gestor
-{
+final class GestorTimes extends Gestor {
 
-    public function __construct(PDO $conexao)
-    {
+    public function __construct(PDO $conexao) {
         parent::__construct($conexao, "TimesRepositorioEmBDR");
     }
 
-    public function timeComId(int $id): ?time
-    {
+    public function timeComId(int $id): ?time {
         $time = $this->controller->get($id, "Usuário não encontrado!");
         return $time;
     }
 
-    public function cadastrar(array $dados): bool
-    {
+    public function cadastrar(array $dados): bool {
         if (!$this->validarDados([$dados["nome"], $dados["email"], $dados["senha"]])) respostaJson(true, "Parâmetros inválidos!", 400);
         $time = new time(0, $dados["nome"], $dados["email"], $dados["senha"]);
         return $this->controller->post($time, "Erro ao criar usuário! Erros: ");
     }
 
-    public function alterar(array $dados): ?int
-    {
+    public function alterar(array $dados): ?int {
         // idUsuario (para verificar se é um lider e pode alterar)
         $id = $dados["id"] ?? $dados[0];
         $nome =  $dados["nome"];
@@ -50,23 +45,28 @@ final class GestorTimes extends Gestor
 
         // verificar se usuario tem permissao para alterar
         // if(){
-            return $this->controller->put($time, "Erro ao alterar seus dados!");
+        return $this->controller->put($time, "Erro ao alterar seus dados!");
         // } else {
-            // return null;
+        // return null;
         // }
     }
 
 
-    public function removerComId(int $id, int $idUsuarioTime): ?int
-    {
-        // idUsuario (para verificar se é um lider e pode excluir)
-        // $usuarioTime->obterPeloId($idUsuario);
-        $time = $this->timeComId($id, $idUsuarioTime);
+    public function removerComId(int $id, int $idUsuarioTime): ?int {
+        global $conexao;
 
-        if ($time) {
-            return $this->controller->delete($id, "Erro ao excluir seu perfil!", $senha);
-        } else {
-            return null;
+        // idUsuario (para verificar se é um lider e pode excluir o time)
+        $repositorioUsuarioTime = new UsuarioTimeRepositorioEmBDR($conexao);
+        $lider = $repositorioUsuarioTime->obterPeloId($idUsuarioTime, true);
+
+        if (!empty($lider)) {
+            
+            $time = $this->timeComId($id);
+
+            if ($time) {
+                return $this->controller->delete($id, "Erro ao excluir seu time!");
+            }
         }
+        return null;
     }
 }
