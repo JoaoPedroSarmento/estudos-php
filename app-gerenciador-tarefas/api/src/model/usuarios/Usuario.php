@@ -46,6 +46,8 @@ final class Usuario extends Validavel implements JsonSerializable {
         return password_verify($senha, $this->senha);
     }
     
+
+
     public function jsonSerialize(): array {
         return [
             "id" => $this->id,

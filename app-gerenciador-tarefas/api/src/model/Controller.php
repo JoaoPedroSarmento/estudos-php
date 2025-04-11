@@ -7,8 +7,7 @@ declare(strict_types=1);
  * Controller serve para controlar os dados retornar os valor retornado do RepositorioEmBDR.
  * Recebe o ObjetoRepositorioEmBDr e em cada método de insercao ou alteracao trabalha com um objeto Vaidavel. 
  */
-final class Controller
-{
+final class Controller {
 
     private object $repositorio;
 

@@ -1,5 +1,7 @@
 <?php 
 
+declare(strict_types=1);
+
 interface RepositorioUsuarios{
     
     public function inserir(Usuario $u):int;

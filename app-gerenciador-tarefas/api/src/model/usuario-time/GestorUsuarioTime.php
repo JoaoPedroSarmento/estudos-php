@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 final class GestorTimes extends Gestor
 {
 
@@ -37,7 +39,7 @@ final class GestorTimes extends Gestor
         return $time;
     }
 
-    public function cadastrar(array $dados): bool
+    public function cadastrar(array $dados): int
     {
         if (!$this->validarDados([$dados["nome"], $dados["email"], $dados["senha"]])) respostaJson(true, "Parâmetros inválidos!", 400);
         $time = new time(0, $dados["nome"], $dados["email"], $dados["senha"]);
@@ -80,11 +82,11 @@ final class GestorTimes extends Gestor
     }
 
 
-    public function removerComId(int $id, int $idUsuarioTime): ?int {
+    public function removerComId(int $id, int $idUsuarioTime): int|null {
         // idUsuario (para verificar se é um lider e pode excluir o usuario do time)
         // $usuarioTime->obterPeloId($idUsuario);
 
-        $liderTime = $this->obterPeloId($idUsuarioTime, true);
+            $liderTime = $this->repositorioEmBDR->obterPeloId($idUsuarioTime, true);
 
         // Verifica se encontrou o líder e se o ID do líder corresponde ao idExcluidor
         if (!empty($liderTime) && $liderTime[0]->usuario_id == $idUsuarioTime) {

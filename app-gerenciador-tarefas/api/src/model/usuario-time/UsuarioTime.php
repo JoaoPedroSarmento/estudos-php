@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class UsuarioTime extends Validavel implements JsonSerializable {
     
     public ?Usuario $usuario;

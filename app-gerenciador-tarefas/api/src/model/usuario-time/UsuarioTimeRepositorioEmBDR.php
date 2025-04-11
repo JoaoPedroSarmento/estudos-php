@@ -3,10 +3,9 @@
 declare(strict_types=1);
 
 
-final class UsuarioTimeRepositorioEmBDR extends RepositorioEmBDR implements RepositorioUsuarioTime
-{
+final class UsuarioTimeRepositorioEmBDR extends RepositorioEmBDR implements RepositorioUsuarioTime {
 
-    public function inserir(UsuarioTime $uT): int
+    public function inserir(UsuarioTime $uT): int 
     {
         /***
          * 

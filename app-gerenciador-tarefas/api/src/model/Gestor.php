@@ -1,7 +1,7 @@
 <?php
 
 abstract class Gestor {
-    protected RepositorioEmBDR $repositorioEmBDR;
+    protected object $repositorioEmBDR;
     protected Controller $controller;
 
     public function __construct(PDO $conexao, string $classe) {
