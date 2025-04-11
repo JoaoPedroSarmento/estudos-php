@@ -1,26 +1,19 @@
 <?php
 
 class Time extends Validavel implements JsonSerializable {
-    public int $id;
-    public string $nome;
-    public string $descricao;
-    public string $criado_em;
-
+    
     public function __construct(
-        int $id = 0,
-        string $nome = "",
-        string $descricao = "",
-        ?string $criado_em = null
-    ) {
-        $this->id = $id;
-        $this->nome = $nome;
-        $this->descricao = $descricao;
-        $this->criado_em = $criado_em;
-    }
+    public int $id = 0 ,
+    public string $nome = "", 
+    public string $descricao  = "", 
+    public ?string $criado_em  = null
+    ) {}
+
 
     public function validar(): void {
         
     }
+
 
     public function jsonSerialize(): array {
         return [

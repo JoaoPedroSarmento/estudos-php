@@ -17,11 +17,12 @@ final class Controller {
         $this->repositorio = $repositorio;
     }
 
-    public function get(?int $id = null, ?string $msgErro = null , ?string $sql = null )
+    public function get(int $id, ?string $msgErro = null , ?string $sql = null , ?string $email = null)
     {
         if (!$id) {
             return $this->repositorio->obterTodos();
         } else if ($this->repositorio->existeComId($id , $sql)) {
+            if($email) return $this->repositorio->obterPeloIdEmail($id , $email);
             return $this->repositorio->obterPeloId($id);
         }
         throw new RuntimeException($msgErro ? $msgErro . " - Registro não encontrado" : "Erro ao buscar informações - Registro não encontrado.", 400);

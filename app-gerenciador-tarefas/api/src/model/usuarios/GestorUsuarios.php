@@ -10,8 +10,8 @@ final class GestorUsuarios extends Gestor
         parent::__construct($conexao, "UsuariosRepositorioEmBDR");
     }
 
-    public function usuarioComId(int $id, string $senha): Usuario|null {
-        $usuario = $this->controller->get($id, "Usuário não encontrado!");
+    public function usuarioComId(int $id, string $senha, ?string $email = null): Usuario|null {
+        $usuario = $this->controller->get($id, "Usuário não encontrado!" , null , $email);
         if ($usuario->verificaSenha($senha)) {
             return $usuario;
         }

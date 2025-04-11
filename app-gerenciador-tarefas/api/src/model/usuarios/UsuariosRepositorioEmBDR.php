@@ -45,7 +45,21 @@ public function excluirPeloId(int $id):bool{
 }
 
 
-public function obterPeloId(int $id):?Usuario{
+public function obterPeloIdEmail(int $id , string $email):?Usuario{
+  // erro ao buscar email errado
+  $sql = "SELECT * FROM usuarios WHERE id = :id and email = :email";
+  $msgErro = "Senha incorreta!";
+  $parametros = [
+    "id" => $id,
+    "email" => $email
+  ];
+  
+ $usuario =  $this->primeiroObjetoDaClasse($sql , Usuario::class, $parametros , $msgErro);
+  
+ return $usuario;
+}
+
+public function obterPeloId(int $id) {
   $sql = "SELECT * FROM usuarios WHERE id = :id";
   $msgErro = "Senha incorreta!";
   $parametros = [

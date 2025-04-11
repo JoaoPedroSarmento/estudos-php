@@ -1,12 +1,26 @@
 <?php 
 
-
+declare(strict_types=1);
 
 $gestor = new GestorUsuarios($conexao);
 
 
 return [
     "/usuarios" => [
+        "GET" => function ($dados) use ($gestor){
+            $id = (int)  $dados["id"] ?? null;
+            $senha = (string) $dados["senha"] ?? null;
+            $email = (string) $dados["email"] ?? null;
+            
+            if(!$senha) respostaJson(true, "Insira a senha!" , 400);
+
+            if(!$id) respostaJson(true , "Erro ao encontrar ID!" , 400);
+            if(!$email) respostaJson(true , "Erro ao encontrar EMAIL!" , 400);
+            $usuario = $gestor->usuarioComId($id , $senha , $email);     
+            if($usuario) respostaJson(false, "Perfil encontrado com sucesso" , 200, $usuario);
+            else respostaJson(false, "Senha incorreta" , 404);
+        }, 
+
         "POST" => function ($dados) use ($gestor){
             $cadastro = $gestor->cadastrar($dados);
             if($cadastro) respostaJson(false , "Perfil criado com sucesso" , 200);
