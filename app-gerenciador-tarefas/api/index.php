@@ -6,7 +6,6 @@ declare(strict_types=1);
 
     require_once __DIR__ . "/src/util/funcoes.php";
     require_once __DIR__ . "/vendor/autoload.php";
-
         
     $dados = json_decode(file_get_contents('php://input'), true) ?? [];
 
@@ -35,9 +34,11 @@ declare(strict_types=1);
     if(!$rota->rotaEncontrada) respostaJson(true , "Rota não encontrada!" , 400);
 
  }catch(DadosNaoEnviadosException $e){
-    respostaJson(true, "ERRO: " . $e->getMessage() , 500);
+    respostaJson(true, $e->getMessage() , $e->getCode());
  }catch(Exception $e){
-    respostaJson(true , $e->getMessage() , 500);
+    respostaJson(true , $e->getMessage() ,$e->getCode());
+ }catch(Throwable  $e){
+    respostaJson(true , $e->getMessage() , $e->getCode());
  }
 
 
