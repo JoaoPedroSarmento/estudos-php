@@ -25,15 +25,16 @@ final class Rota {
         $this->rotaEncontrada = true;
     
         // constroi a rota dinamicamente
+        // posso melhorar os nomes...
         
         $constroiRota = new ConstroiRota($rota , $gestor , $conexao);
-        $rota = $constroiRota->construirRota();
+        $funcao = $constroiRota->getFuncao();
 
-        if($rota){
+        if($funcao){
                 try{
-                    if( ! empty( $this->dados ) ) $rota( $this->dados );
-                    else if ( ! empty( $this->parametros ) ) $rota( $this->parametros );
-                    else $rota();
+                    if( ! empty( $this->dados ) ) $funcao( $this->dados );
+                    else if ( ! empty( $this->parametros ) ) $funcao( $this->parametros );
+                    else $funcao();
                 }
                 catch (RuntimeException $e) {
                     respostaJson( true, $e->getMessage(), 400 );

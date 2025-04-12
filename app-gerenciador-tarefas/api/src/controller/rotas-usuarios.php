@@ -10,13 +10,12 @@ $modeloRotas = [
             "gestorMetodo" => "cadastrar",
             "dados" => $dados,
             "msgs" => [
-               "msgSucesso" => "Perfil criado com sucesso",
-               "msgErro" =>  "Erro ao criar perfil!"
+                "msgSucesso" => "Perfil criado com sucesso",
+                "msgErro" =>  "Erro ao criar perfil!"
             ]
         ]
 
-    ],
-    "/usuarios/:id" => [
+    ], "/usuarios/:id" => [
         "gestor" => "GestorUsuarios",
         "POST" => [
             "recebeArray" => false,
@@ -30,8 +29,7 @@ $modeloRotas = [
                 "msgSucesso" => "Perfil encontrado com sucesso",
                 "msgErro" =>  "Senha e/ou e-mail incorretos"
             ]
-        ],
-        "DELETE" => [
+        ], "DELETE" => [
             "recebeArray" => false,
             "gestorMetodo" => "removerComId",
             "dados" => [
@@ -43,8 +41,7 @@ $modeloRotas = [
                 "msgSucesso" => "Perfil excluído com sucesso",
                 "msgErro" => "Senha incorreta"
             ]
-        ],
-        "PUT" => [
+        ], "PUT" => [
             "recebeArray" => true,
             "gestorMetodo" => "alterar",
             "dados" => $dados,

@@ -30,7 +30,7 @@ final class ConstroiRota {
         };
     }
 
-    public function construirRota(): Closure {
+    public function getFuncao(): Closure {
         return $this->funcao;
     }
 }
