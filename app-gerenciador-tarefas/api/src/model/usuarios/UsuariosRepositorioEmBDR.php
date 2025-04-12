@@ -47,8 +47,9 @@ public function excluirPeloId(int $id):bool{
 
 public function obterPeloIdEmail(int $id , string $email):?Usuario{
   // erro ao buscar email errado
+
   $sql = "SELECT * FROM usuarios WHERE id = :id and email = :email";
-  $msgErro = "Senha incorreta!";
+  $msgErro = "Senha incorreta e/ou e-mail incorretos!";
   $parametros = [
     "id" => $id,
     "email" => $email
@@ -61,7 +62,7 @@ public function obterPeloIdEmail(int $id , string $email):?Usuario{
 
 public function obterPeloId(int $id) {
   $sql = "SELECT * FROM usuarios WHERE id = :id";
-  $msgErro = "Senha incorreta!";
+  $msgErro = "Senha incorreta e/ou email incorretos!";
   $parametros = [
     "id" => $id,
   ];

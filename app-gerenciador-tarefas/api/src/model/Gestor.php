@@ -13,7 +13,7 @@ abstract class Gestor {
         $valido  = true;
 
         foreach ($parametros as $param) {
-            if (!isset($param)) {
+            if (!$param || !isset($param)) {
                 $valido = false;
                 break;
             };

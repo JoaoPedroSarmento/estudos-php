@@ -15,7 +15,7 @@ function getConexao():PDO{
     try{
        $pdo = new PDO($dns , "root" , "" , OPCOES);
     }catch(PDOException $e){
-    respostaJson(true, "Erro ao realizar conexão" , 500);
+    respostaJson(true, "Erro ao realizar conexão! " . $e->getMessage() , 500);
     }
 
     return $pdo;

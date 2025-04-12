@@ -20,9 +20,15 @@ final class Rota {
         return $this->metodo;
     }
 
-    public function executarRota( Array $rotas ) { 
+    public function executarRota( Array $rotas , PDO $conexao , string $gestor){ 
         $rota =  $rotas[ $this->logica ][ $this->metodo ];
         $this->rotaEncontrada = true;
+    
+        // constroi a rota dinamicamente
+        
+        $constroiRota = new ConstroiRota($rota , $gestor , $conexao);
+        $rota = $constroiRota->construirRota();
+
         if($rota){
                 try{
                     if( ! empty( $this->dados ) ) $rota( $this->dados );

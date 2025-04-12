@@ -26,9 +26,9 @@ declare(strict_types=1);
     $rota->dados = $dados;
 
     $rotasArray = require_once "src/rotas.php";
-
+   
     foreach ($rotasArray as $rotas) {
-        if (isset($rotas[$logica])) $rota->executarRota($rotas);
+        if (isset($rotas[$logica])) $rota->executarRota($rotas, $conexao,  $rotas[$logica]["gestor"]);
     }
     
 

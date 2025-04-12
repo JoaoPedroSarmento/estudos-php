@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-final class GestorUsuarios extends Gestor
-{
+final class GestorUsuarios extends Gestor {
 
     public function __construct(PDO $conexao)
     {
@@ -11,8 +10,9 @@ final class GestorUsuarios extends Gestor
     }
 
     public function usuarioComId(int $id, string $senha, ?string $email = null): Usuario|null {
-        $usuario = $this->controller->get($id, "Usuário não encontrado!" , null , $email);
-        if ($usuario->verificaSenha($senha)) {
+        if(!$this->validarDados([$id , $senha , $email])) respostaJson(true , "Parâmetros inválidos!" , 400);
+        $usuario = $this->controller->get($id, "Usuário não encontrado!" , null , $email , true);
+        if ($usuario && $usuario->verificaSenha($senha)) {
             return $usuario;
         }
         return null;
@@ -30,7 +30,7 @@ final class GestorUsuarios extends Gestor
         $nome =  $dados["nome"];
         $email = $dados["email"];
         $senha = $dados["senha"];
-        $senhaNova = $dados["senhaNova"];
+        $senhaNova = $dados["senhaNova"] ?? null;
 
         if (!$this->validarDados([
             $id,
