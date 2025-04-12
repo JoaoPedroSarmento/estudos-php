@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+$id = (int) $dados[0] ?? null;
+$senha = (string) $dados["senha"] ?? null;
+$email = (string) $dados["email"] ?? null;
+    
 $modeloRotas = [
     "/usuarios" => [
         "gestor" => "GestorUsuarios",
@@ -21,9 +25,9 @@ $modeloRotas = [
             "recebeArray" => false,
             "gestorMetodo" => "usuarioComId",
             "dados" => [
-                "id" => (int) ($dados[0] ?? null),
-                "senha" => (string) ($dados["senha"] ?? null),
-                "email" => (string) ($dados["email"] ?? null)
+                "id" => $id,
+                "senha" => $senha,
+                "email" =>$email
             ],
             "msgs" => [
                 "msgSucesso" => "Perfil encontrado com sucesso",
@@ -33,8 +37,8 @@ $modeloRotas = [
             "recebeArray" => false,
             "gestorMetodo" => "removerComId",
             "dados" => [
-                "id" => (int) ($dados[0] ?? null),
-                "senha" => (string) ($dados["senha"] ?? null)
+                "id" => $id,
+                "senha" => $senha
             ],
             "msgs" => [
 
