@@ -2,7 +2,7 @@
 
 interface RepositorioTimes {
     
-    public function inserir(Time $u, UsuarioTime $uT):int;
+    public function inserir(Time $u):int;
 
     public function alterar(Time $u, UsuarioTime $uT):bool;
 

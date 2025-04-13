@@ -6,7 +6,7 @@ declare(strict_types=1);
 final class TimesRepositorioEmBDR extends RepositorioEmBDR implements RepositorioTimes{
       
 
-    public function inserir(Time $t , UsuarioTime $uT): int{
+    public function inserir(Time $t): int{
 
     
       $sql = "INSERT INTO times(nome , descricao, criado_em) VALUE(:nome , :descricao , :criado_em)";

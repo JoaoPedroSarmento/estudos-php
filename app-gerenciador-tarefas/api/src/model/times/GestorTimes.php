@@ -7,14 +7,14 @@ final class GestorTimes extends Gestor {
     }
 
     public function timeComId(int $id): ?time {
-        $time = $this->controller->get($id, "Usuário não encontrado!");
+        $time = $this->controller->get($id, "Time não encontrado!");
         return $time;
     }
 
     public function cadastrar(array $dados): bool {
-        if (!$this->validarDados([$dados["nome"], $dados["email"], $dados["senha"]])) respostaJson(true, "Parâmetros inválidos!", 400);
-        $time = new time(0, $dados["nome"], $dados["email"], $dados["senha"]);
-        return $this->controller->post($time, "Erro ao criar usuário! Erros: ");
+        if (!$this->validarDados([$dados["nome"], $dados["descricao"]])) respostaJson(true, "Parâmetros inválidos!", 400);
+        $time = new time(0, $dados["nome"], $dados["descricao"]);
+        return $this->controller->post($time, "Erro ao criar time! Erros: ");
     }
 
     public function alterar(array $dados): ?int {
@@ -32,7 +32,7 @@ final class GestorTimes extends Gestor {
             $senha
         ])) respostaJson(true, "Parâmetros inválidos!", 400);
 
-        $timeBanco =  $this->controller->get($id, "Usuário não encontrado!");
+        $timeBanco =  $this->controller->get($id, "Time não encontrado!");
 
         $time = new time(
             $id,

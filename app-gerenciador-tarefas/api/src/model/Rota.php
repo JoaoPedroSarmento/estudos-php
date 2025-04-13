@@ -25,10 +25,8 @@ final class Rota {
         $this->rotaEncontrada = true;
     
         // constroi a rota dinamicamente
-        // posso melhorar os nomes...
         
-        $constroiRota = new ConstroiRota($rota , $gestor , $conexao);
-        $funcao = $constroiRota->getFuncao();
+       $funcao =  GestorRotas::criaFuncaoDaRota($rota , $gestor , $conexao);
 
         if($funcao){
                 try{

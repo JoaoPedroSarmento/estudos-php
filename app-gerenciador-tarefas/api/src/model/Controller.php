@@ -32,6 +32,7 @@ final class Controller {
     {
         $object->validar();
         $problemas = $object->getProblemas();
+        var_dump($object);
         if (!empty($problemas))
             throw new EntradaInvalidaException($msgErro ? $msgErro . $object->getProblemasString() .  " - Dados Inválidos" : "Erro ao cadastrar informações - Dados Inválidos", 500, $problemas);
         return $this->repositorio->inserir($object);

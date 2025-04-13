@@ -5,57 +5,25 @@ declare(strict_types=1);
 $id = (int) $dados[0] ?? null;
 $senha = (string) $dados["senha"] ?? null;
 $email = (string) $dados["email"] ?? null;
-    
+
+// criar uma classe modeloRotas
 $modeloRotas = [
     "/usuarios" => [
         "gestor" => "GestorUsuarios",
-        "POST" => [
-            "recebeArray" => true,
-            "gestorMetodo" => "cadastrar",
-            "dados" => $dados,
-            "msgs" => [
-                "msgSucesso" => "Perfil criado com sucesso",
-                "msgErro" =>  "Erro ao criar perfil!"
-            ]
-        ]
-
-    ], "/usuarios/:id" => [
+        "POST" => GestorRotas::modelaMetodoHTTPDaRota(true, "cadastrar", $dados, "Perfil criado com sucesso", "Erro ao configura perfil"),
+    ],
+    "/usuarios/:id" => [
         "gestor" => "GestorUsuarios",
-        "POST" => [
-            "recebeArray" => false,
-            "gestorMetodo" => "usuarioComId",
-            "dados" => [
-                "id" => $id,
-                "senha" => $senha,
-                "email" =>$email
-            ],
-            "msgs" => [
-                "msgSucesso" => "Perfil encontrado com sucesso",
-                "msgErro" =>  "Senha e/ou e-mail incorretos"
-            ]
-        ], "DELETE" => [
-            "recebeArray" => false,
-            "gestorMetodo" => "removerComId",
-            "dados" => [
-                "id" => $id,
-                "senha" => $senha
-            ],
-            "msgs" => [
-
-                "msgSucesso" => "Perfil excluído com sucesso",
-                "msgErro" => "Senha incorreta"
-            ]
-        ], "PUT" => [
-            "recebeArray" => true,
-            "gestorMetodo" => "alterar",
-            "dados" => $dados,
-            "msgs" => [
-                "msgSucesso" => "Perfil alterado com sucesso",
-                "msgErro" =>    "Senha incorreta!"
-            ]
-        ]
-    ]
-
+        "POST" => GestorRotas::modelaMetodoHTTPDaRota(
+            false,
+            "usuarioComId",
+            ["id" => $id, "senha" => $senha, " email" => $email],
+            "Perfil encontrado com sucesso!",
+            "Senha e/ou e-mail incorretos"
+        ),
+        "DELETE" =>  GestorRotas::modelaMetodoHTTPDaRota(false, "removerComId", ["id" => $id, "senha" => $senha], "Perfil exclu'id com sucesso", " Senha incorreta"),
+        "PUT" =>   GestorRotas::modelaMetodoHTTPDaRota(true, "alterar", $dados, "Perfil alterado com sucesso", "Senha incorreta!"),
+    ],
 ];
 
 return $modeloRotas;
