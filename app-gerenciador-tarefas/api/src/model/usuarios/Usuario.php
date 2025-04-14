@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 final class Usuario extends Validavel implements JsonSerializable {
  
-
-
     public function __construct(
         public int $id = 0,
         public string $nome = "",
@@ -17,7 +15,7 @@ final class Usuario extends Validavel implements JsonSerializable {
 
 
     public function validar(): void {
-        if(strlen($this->senha) < 10) $this->problemas[] = "Senha inválida! Digite ao menos 10 caracs";
+        if(strlen($this->senha) < 8) $this->problemas[] = "Senha inválida! Digite ao menos 8 caracs";
         else {
             $this->setSenhaComHash($this->senha);
         }

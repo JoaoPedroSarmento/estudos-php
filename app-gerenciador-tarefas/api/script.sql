@@ -7,7 +7,7 @@ CREATE TABLE
         email VARCHAR(100) UNIQUE NOT NULL,
         senha VARCHAR(255) NOT NULL,
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        ativo BOOLEAN DEFAULT TRUE,
+        ativo BOOLEAN DEFAULT TRUE
     );
 
 -- Perfis de usuário (admin, membro, etc)
@@ -31,9 +31,10 @@ CREATE TABLE
 CREATE TABLE
     times (
         id INT PRIMARY KEY AUTO_INCREMENT,
-        nome VARCHAR(100) NOT NULL,
+        nome VARCHAR(100) NOT NULL UNIQUE,
         descricao TEXT,
-        criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        id_lider NOT NULL INT
     );
 
 -- Associação de usuários aos times

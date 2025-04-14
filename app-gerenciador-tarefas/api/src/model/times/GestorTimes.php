@@ -12,8 +12,8 @@ final class GestorTimes extends Gestor {
     }
 
     public function cadastrar(array $dados): bool {
-        if (!$this->validarDados([$dados["nome"], $dados["descricao"]])) respostaJson(true, "Parâmetros inválidos!", 400);
-        $time = new time(0, $dados["nome"], $dados["descricao"]);
+        if (!$this->validarDados([$dados["nome"], $dados["descricao"] , $dados["id_lider"]])) respostaJson(true, "Parâmetros inválidos!", 400);
+        $time = new time(0, $dados["nome"], $dados["descricao"] , $dados["id_lider"]);
         return $this->controller->post($time, "Erro ao criar time! Erros: ");
     }
 

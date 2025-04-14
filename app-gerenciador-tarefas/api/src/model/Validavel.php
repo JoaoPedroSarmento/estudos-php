@@ -13,7 +13,7 @@ abstract class Validavel{
     }
 
     public function getProblemasString():string{
-        return implode("," , $this->problemas);
+        return implode(", " , $this->problemas);
     }
 }
 

@@ -1,8 +1,7 @@
 <?php
 
-// $idTime = $dados["id"] ?? null;
-// $idUsuario = $dados["idUsuario"];
-
+$idTime = dadoEstaValido($dados , "idTime");
+$idUsuario = dadoEstaValido($dados , "idUsuario");
 
 $modeloRotas = [
     "/times" => [
@@ -14,6 +13,5 @@ $modeloRotas = [
      ]
 ];
 
-echo "modelo rotas: ";
 return $modeloRotas;
 ?>

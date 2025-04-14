@@ -18,6 +18,8 @@ abstract class GestorRotas {
     static public function criaFuncaoDaRota(array $metodo, string $gestor, PDO $conexao): Closure {
         return function () use ($metodo, $gestor, $conexao) {
             $gestor = new $gestor($conexao);
+            $gestorMetodo = $metodo["gestorMetodo"];
+
             $resultado = null;
 
             if ($metodo["recebeArray"]) {

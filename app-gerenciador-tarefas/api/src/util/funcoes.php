@@ -10,8 +10,11 @@ const OPCOES = [
 ];
 
 function getConexao():PDO{
-    
-    $dns = "mysql:dbname=repositorio_gerencia_tarefas;host=localhost;charset=utf8";
+  
+    $dbName = "repositorio_gerencia_tarefas";
+    $host = "localhost";
+
+    $dns = "mysql:dbname=$dbName;host=$host;charset=utf8";
     try{
        $pdo = new PDO($dns , "root" , "" , OPCOES);
     }catch(PDOException $e){
@@ -41,18 +44,21 @@ function obterLogica(array &$dados):string{
     
     $logica = "/$arrayRota[1]";
     // ["/" , "produto" , "/" "1"]
-
     if(count($arrayRota) > 2){
         for( $i = 2; $i < count( $arrayRota ); $i++ ) {
             if( ! is_numeric( $arrayRota[$i] ) )
                 $logica .= "/".$arrayRota[$i];
             else {
-                array_unshift($dados , (int) $arrayRota[$i]);
+                array_push($dados , (int) $arrayRota[$i]);
                 $logica .= "/:id";
             }
         }
     }
     return $logica;
+}
+
+function dadoEstaValido(array $dados , int|string $param):mixed{
+    return (isset($dados[$param]) && !empty($dados[$param])) ? $dados[$param] : null;
 }
 
 ?>

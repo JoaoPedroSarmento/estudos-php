@@ -14,7 +14,7 @@ final class Requisicao {
     private string $logicaComId = '';
 
 
-    public function __construct( array $dadosReq ) {
+    public function __construct( array $dadosReq) {
         $this->dadosReq = $dadosReq;
         $this->destrinchaRequisicao();
     }

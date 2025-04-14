@@ -1,7 +1,6 @@
 <?php 
 
 declare(strict_types=1);
-
   try{
 
     require_once __DIR__ . "/src/util/funcoes.php";
@@ -9,7 +8,7 @@ declare(strict_types=1);
         
     $dados = json_decode(file_get_contents('php://input'), true) ?? [];
 
-    $rota = new Rota($_SERVER);
+    $rota = new Rota($_SERVER, obterLogica($dados));
     
     $metodo = $rota->getMetodo();
 
@@ -19,15 +18,16 @@ declare(strict_types=1);
         }
     }
 
-    $logica = obterLogica($dados);
     $conexao = getConexao();
 
     $rota->dados = $dados;
 
     $rotasArray = require_once "src/rotas.php";
-   
+
     foreach ($rotasArray as $rotas) {
-        if (isset($rotas[$logica])) $rota->executarRota($rotas, $conexao,  $rotas[$logica]["gestor"]);
+        if (isset($rotas[$rota->logica])) {
+         $rota->executarRota($rotas, $conexao,  $rotas[$rota->logica]["gestor"]); 
+      };
     }
     
 

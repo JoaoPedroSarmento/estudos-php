@@ -56,8 +56,8 @@ protected function executar($sql , $msgErro ,$parametros = []):PDOStatement{
         return $ps;
 
     }catch(PDOException $e){
-        if($e->getCode() == "23000") respostaJson(true, "Insira outro e-mail!" , 500);
-        respostaJson(true , $msgErro  , 500);
+        if($e->getCode() == "23000") respostaJson(true, $msgErro , 500);
+        respostaJson(true , $msgErro  .  $e->getMessage(), 500);
     }
 }
 

@@ -2,16 +2,16 @@
 declare(strict_types=1);
 
 final class Rota {
-    private string $logica;
+    public string $logica;
     private string $metodo;
     private array $parametros;
     private Requisicao $req;
     public Array $dados;
     public bool $rotaEncontrada = false;
     
-    public function __construct( Array $server){
-        $this->req = new Requisicao( $server );
-        $this->logica = $this->req->getLogica();
+    public function __construct( Array $server , string $logica){
+        $this->req = new Requisicao( $server);
+        $this->logica = $logica;
         $this->metodo = $this->req->getMetodo();
         $this->parametros = $this->req->getParametros();
     }
