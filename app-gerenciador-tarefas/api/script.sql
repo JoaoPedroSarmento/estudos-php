@@ -28,14 +28,14 @@ CREATE TABLE
     );
 
 -- Times
-CREATE TABLE
-    times (
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        nome VARCHAR(100) NOT NULL UNIQUE,
-        descricao TEXT,
-        criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        id_lider NOT NULL INT
-    );
+CREATE TABLE times (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL UNIQUE,
+    descricao TEXT,
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_lider INT NOT NULL,
+    FOREIGN KEY (id_lider) REFERENCES usuarios(id)
+);
 
 -- Associação de usuários aos times
 CREATE TABLE

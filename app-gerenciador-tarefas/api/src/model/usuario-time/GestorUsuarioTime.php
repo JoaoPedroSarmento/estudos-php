@@ -41,37 +41,28 @@ final class GestorTimes extends Gestor
 
     public function cadastrar(array $dados): int
     {
-        if (!$this->validarDados([$dados["nome"], $dados["email"], $dados["senha"]])) respostaJson(true, "Parâmetros inválidos!", 400);
+        $nome = $this->dadoEstaValido($dados , "nome");
+        $email = $this->dadoEstaValido($dados , "email");
+        $senha = $this->dadoEstaValido($dados , "senha");
+
+        if (!$this->validarDados($nome , $email , $senha)) respostaJson(true, "Parâmetros inválidos!", 400);
         $time = new time(0, $dados["nome"], $dados["email"], $dados["senha"]);
         return $this->controller->post($time, "Erro ao criar usuário! Erros: ");
     }
 
-    public function alterar(array $dados): ?int
-    {
+    public function alterar(array $dados): ?int {
         // idUsuario (para verificar se é um lider e pode alterar)
-        $id = $dados["id"] ?? $dados[0];
-        $nome =  $dados["nome"];
-        $email = $dados["email"];
-        $senha = $dados["senha"];
-        $senhaNova = $dados["senhaNova"];
+        $id = $this->dadoEstaValido($dados , 0) ?? $this->dadoEstaValido($dados, "id");
+        $nome =  $this->dadoEstaValido($dados , "nome");
+        $email = $this->dadoEstaValido($dados , "email");
+        $senha = $this->dadoEstaValido($dados , "senha");
+        $senhaNova = $this->dadoEstaValido($dados, "senhaNova");
 
-        if (!$this->validarDados([
-            $id,
-            $nome,
-            $email,
-            $senha
-        ])) respostaJson(true, "Parâmetros inválidos!", 400);
+        if (!$this->validarDados($id, $nome, $email, $senha)) respostaJson(true, "Parâmetros inválidos!", 400);
 
         $timeBanco =  $this->controller->get($id, "Usuário não encontrado!");
 
-        $time = new time(
-            $id,
-            $nome,
-            $email,
-            $senha,
-            $dados["data_criacao"] ?? null,
-            $dados["ativo"] ?? true
-        );
+        $time = new time( $id, $nome, $email, $senha, $this->dadoEstaValido($dados , "data_criacao"), $this->dadoEstaValido($dados , "ativo"));
 
         // verificar se usuario tem permissao para alterar
         // if(){

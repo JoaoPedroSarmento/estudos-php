@@ -9,7 +9,7 @@ final class UsuariosRepositorioEmBDR extends RepositorioEmBDR implements Reposit
     public function inserir(Usuario $u): int{
 
       $sql = "INSERT INTO usuarios(nome , email, senha) VALUE(:nome , :email , :senha)";
-      $msgErro = "Erro ao inserir produto!";
+      $msgErro = "Erro ao criar perfil! Troque o e-mail!";
       $parametros = [
         "nome" => $u->nome , 
         "email" => $u->email , 
@@ -24,7 +24,7 @@ final class UsuariosRepositorioEmBDR extends RepositorioEmBDR implements Reposit
 
     public function alterar(Usuario $u):bool {
        $sql = "UPDATE usuarios SET nome = :nome , email = :email , senha = :senha WHERE id = :id";
-       $msgErro = "Erro ao alterar produto!";
+       $msgErro = "Erro ao alterar perfil!";
        $parametros = [
         "id" => $u->id,
         "nome" => $u->nome , 

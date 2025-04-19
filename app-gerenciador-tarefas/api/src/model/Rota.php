@@ -6,33 +6,31 @@ final class Rota {
     private string $metodo;
     private array $parametros;
     private Requisicao $req;
-    public Array $dados;
+    public Array $dadosUsuario;
     public bool $rotaEncontrada = false;
     
-    public function __construct( Array $server , string $logica){
-        $this->req = new Requisicao( $server);
-        $this->logica = $logica;
+    public function __construct( Array $server , array &$dadosUsuario){
+        $this->req = new Requisicao( $server , $dadosUsuario);
+        $this->logica = $this->req->getLogica();
         $this->metodo = $this->req->getMetodo();
         $this->parametros = $this->req->getParametros();
+        $this->dadosUsuario = $dadosUsuario;
     }
 
     public function getMetodo(){
         return $this->metodo;
     }
 
-    public function executarRota( Array $rotas , PDO $conexao , string $gestor){ 
+    public function executarRota( Array $rotas , Gestor $gestor){ 
         $rota =  $rotas[ $this->logica ][ $this->metodo ];
-        $this->rotaEncontrada = true;
-    
-        // constroi a rota dinamicamente
         
-       $funcao =  GestorRotas::criaFuncaoDaRota($rota , $gestor , $conexao);
+               
+        $funcao = $rota ? GestorRotas::criaFuncaoDaRota($rota , $gestor) : null;
 
         if($funcao){
                 try{
-                    if( ! empty( $this->dados ) ) $funcao( $this->dados );
-                    else if ( ! empty( $this->parametros ) ) $funcao( $this->parametros );
-                    else $funcao();
+                    $this->rotaEncontrada = true;
+                    $funcao();
                 }
                 catch (RuntimeException $e) {
                     respostaJson( true, $e->getMessage(), 400 );

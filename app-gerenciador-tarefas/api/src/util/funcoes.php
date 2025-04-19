@@ -25,40 +25,10 @@ function getConexao():PDO{
 }
 
 
-function respostaJson(bool $erro, string $msg, int $codeStatus , $dados = null){   
+function respostaJson(bool $erro, string $msg, int $codeStatus , $dados = null):never{   
        header("Content-type: application/json;charset=utf-8");
        die(json_encode(["erro" => $erro  , "msg" => $msg , "status" => $codeStatus , "dados" => $dados]));
 }
 
-function obterLogica(array &$dados):string{
-    // url = app-adm-loja/produto (ex: get)
-    $url = $_SERVER["REQUEST_URI"];
-
-    // diretorioRaiz = app-adm-loja-produto
-    $diretorioRaiz = strtolower(dirname($_SERVER["PHP_SELF"]));
-
-    // rota completa -> tira app-adm-loja de dentro de url, assim, url, fica: /produto
-    $rotaCompleta = str_replace($diretorioRaiz , "" , $url);
-    // ["/" , "produto"]
-    $arrayRota = explode("/" , $rotaCompleta);
-    
-    $logica = "/$arrayRota[1]";
-    // ["/" , "produto" , "/" "1"]
-    if(count($arrayRota) > 2){
-        for( $i = 2; $i < count( $arrayRota ); $i++ ) {
-            if( ! is_numeric( $arrayRota[$i] ) )
-                $logica .= "/".$arrayRota[$i];
-            else {
-                array_push($dados , (int) $arrayRota[$i]);
-                $logica .= "/:id";
-            }
-        }
-    }
-    return $logica;
-}
-
-function dadoEstaValido(array $dados , int|string $param):mixed{
-    return (isset($dados[$param]) && !empty($dados[$param])) ? $dados[$param] : null;
-}
 
 ?>

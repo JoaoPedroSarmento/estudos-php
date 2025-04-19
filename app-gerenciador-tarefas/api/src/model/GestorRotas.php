@@ -15,17 +15,17 @@ abstract class GestorRotas {
     }
 
     
-    static public function criaFuncaoDaRota(array $metodo, string $gestor, PDO $conexao): Closure {
-        return function () use ($metodo, $gestor, $conexao) {
-            $gestor = new $gestor($conexao);
-            $gestorMetodo = $metodo["gestorMetodo"];
+    static public function criaFuncaoDaRota(array $metodo, Gestor $gestor): Closure {
+        return function () use ($metodo, $gestor) {
 
+            $gestorMetodo = $metodo["gestorMetodo"];
+            $dados = $metodo["dados"];
             $resultado = null;
 
             if ($metodo["recebeArray"]) {
-                $resultado = $gestor->{$metodo["gestorMetodo"]}($metodo["dados"]);
+                $resultado = $gestor->{$gestorMetodo}($dados);
             } else {
-                $resultado = $gestor->{$metodo["gestorMetodo"]}(...array_values($metodo["dados"]));
+                $resultado = $gestor->{$gestorMetodo}(...array_values($dados));
             }
 
             if ($resultado) {

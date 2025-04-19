@@ -28,8 +28,7 @@ final class Controller {
     }
 
 
-    public function post(Validavel $object, ?string $msgErro = null): int
-    {
+    public function post(Validavel $object, ?string $msgErro = null): int {
         $object->validar();
         $problemas = $object->getProblemas();
         if (!empty($problemas))

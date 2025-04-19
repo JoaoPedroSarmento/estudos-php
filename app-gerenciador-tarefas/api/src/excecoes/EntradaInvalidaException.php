@@ -26,4 +26,3 @@ class EntradaInvalidaException extends RuntimeException {
 }
 
 ?>
-?>

@@ -9,7 +9,13 @@ abstract class Gestor {
         $this->controller = new Controller($this->repositorioEmBDR);
     }
 
-    protected function validarDados(array $parametros) {
+
+    public function dadoEstaValido(array $dados , int|string $param):mixed{
+        if(isset($dados[$param]) && !empty($dados[$param])) return $dados[$param];
+        return null;
+    }
+    
+    protected function validarDados(...$parametros) {
         $valido  = true;
 
         foreach ($parametros as $param) {

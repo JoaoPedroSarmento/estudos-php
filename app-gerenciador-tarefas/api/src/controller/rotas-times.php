@@ -1,11 +1,14 @@
 <?php
 
-$idTime = dadoEstaValido($dados , "idTime");
-$idUsuario = dadoEstaValido($dados , "idUsuario");
+// criar instacia Gestor e em Gestor colocar dadoEstaValido
+
+$gestorTimes = new GestorTimes($conexao);
+$idTime = $gestorTimes->dadoEstaValido($dados , "idTime");
+$idUsuario = $gestorTimes->dadoEstaValido($dados , "idUsuario");
 
 $modeloRotas = [
     "/times" => [
-        "gestor" => "GestorTimes",
+        "gestor" => $gestorTimes,
         "POST" => GestorRotas::modelaMetodoHTTPDaRota(true , "cadastrar" , $dados , "Time criado com sucesso" , "Erro ao criar time!")
     ],
      "/times/:id" => [
@@ -15,3 +18,4 @@ $modeloRotas = [
 
 return $modeloRotas;
 ?>
+

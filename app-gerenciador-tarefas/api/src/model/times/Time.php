@@ -13,7 +13,7 @@ class Time extends Validavel implements JsonSerializable {
 
 
     public function validar(): void {
-        if(!$this->nome || strlen($this->nome) == 0 || trim($this->nome) == "") $this->problemas[] = "Insira um nome!";
+        if(!$this->nome || strlen($this->nome) == 0 || trim($this->nome) == "") $this->problemas[] = "Insira um nome válido!";
         // verificar  se existe um usuario com este id
         if(!$this->id_lider || $this->id_lider <= 0) $this->problemas[] = "Insira um usuário para ser lider!";
     }

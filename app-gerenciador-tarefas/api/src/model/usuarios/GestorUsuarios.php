@@ -10,6 +10,7 @@ final class GestorUsuarios extends Gestor {
     }
 
     public function usuarioComId(int $id, string $senha, ?string $email = null): Usuario|null {
+    
         if(!$this->validarDados([$id , $senha , $email])) respostaJson(true , "Parâmetros inválidos!" , 400);
         $usuario = $this->controller->get($id, "Usuário não encontrado!" , null , $email , true);
         if ($usuario && $usuario->verificaSenha($senha)) {
@@ -19,25 +20,26 @@ final class GestorUsuarios extends Gestor {
     }
 
     public function cadastrar(array $dados): int {
-        if (!$this->validarDados([$dados["nome"], $dados["email"], $dados["senha"]])) respostaJson(true, "Parâmetros inválidos!", 400);
-        $usuario = new Usuario(0, $dados["nome"], $dados["email"], $dados["senha"]);
+      
+        $nome =  $this->dadoEstaValido($dados , "nome");
+        $email = $this->dadoEstaValido($dados , "email");
+        $senha = $this->dadoEstaValido($dados , "senha");
+
+        if(!$nome || !$email || !$senha) respostaJson(true , "Parâmetros inválidos" , 400);
+        
+        $usuario = new Usuario(0, $nome, $email, $senha);
         return $this->controller->post($usuario, "Erro ao criar usuário! Erros: ");
     }
 
-    public function alterar(array $dados): int|null
-    {
-        $id = $dados["id"] ?? $dados[0];
-        $nome =  $dados["nome"];
-        $email = $dados["email"];
-        $senha = $dados["senha"];
-        $senhaNova = $dados["senhaNova"] ?? null;
+    public function alterar(array $dados): int|null {
+        
+        $id = (int) ($this->dadoEstaValido($dados , "id") || $this->dadoEstaValido($dados , 0));
+        $nome =  $this->dadoEstaValido($dados , "nome");
+        $email = $this->dadoEstaValido($dados , "email");
+        $senha = $this->dadoEstaValido($dados , "senha");
+        $senhaNova = $this->dadoEstaValido($dados , "senhaNova");
 
-        if (!$this->validarDados([
-            $id,
-            $nome,
-            $email,
-            $senha
-        ])) respostaJson(true, "Parâmetros inválidos!", 400);
+        if (!$id ||  !$nome  || !$email || !$senha) respostaJson(true, "Parâmetros inválidos!", 400);
 
         $usuarioBanco =  $this->controller->get($id, "Usuário não encontrado!");
 

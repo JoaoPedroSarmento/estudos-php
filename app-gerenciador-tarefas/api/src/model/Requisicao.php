@@ -1,61 +1,73 @@
 <?php
-declare( strict_types=1 );
 
-final class Requisicao {
+declare(strict_types=1);
+
+final class Requisicao
+{
     private array $dadosReq;
     private string $url = '';
     private string $arquivoAtual = '';
-    private string $diretorioRaiz = ''; 
-    private string $rota = ''; 
+    private string $diretorioRaiz = '';
+    private string $rota = '';
     private string $metodo = '';
-    private array $arrayRota=[];
+    private array $arrayRota = [];
     private string $logica = '';
     private array $parametros = [];
     private string $logicaComId = '';
 
 
-    public function __construct( array $dadosReq) {
+    public function __construct(array $dadosReq, array &$dadosUsuario) {
         $this->dadosReq = $dadosReq;
-        $this->destrinchaRequisicao();
+        $this->destrinchaRequisicao($dadosUsuario);
     }
 
 
-    private function destrinchaRequisicao(){
-        $this->url = $this->dadosReq[ 'REQUEST_URI' ]; 
+    private function destrinchaRequisicao(&$dadosUsuario) {
+        $this->metodo = $this->dadosReq["REQUEST_METHOD"];
 
-        $this->arquivoAtual = $this->dadosReq[ 'PHP_SELF' ]; 
+        // url = app-adm-loja/produto (ex: get)
+        $this->url = $this->dadosReq["REQUEST_URI"];
 
-        $this->diretorioRaiz = strtolower( dirname( $this->arquivoAtual ) ); 
+        // diretorioRaiz = app-adm-loja-produto
+        $this->diretorioRaiz = strtolower(dirname($this->dadosReq["PHP_SELF"]));
 
-        $this->rota = str_replace( $this->diretorioRaiz, '', $this->url ); 
+        // rota completa -> tira app-adm-loja de dentro de url, assim, url, fica: /produto
+        $rotaCompleta = str_replace($this->diretorioRaiz, "", $this->url);
+        // ["/" , "produto"]
+        $this->arrayRota = explode("/", $rotaCompleta);
 
-        $this->metodo = $this->dadosReq[ 'REQUEST_METHOD' ];
+        $this->logica = "/{$this->arrayRota[1]}";
+        // ["/" , "produto" , "/" "1"]
 
-        $this->arrayRota = explode( '/', $this->rota );
+        if (count($this->arrayRota) > 2) {
+            $this->logicaComId = $this->logica;
 
-        $this->logica = "/".$this->arrayRota[1];
-
-        if( count( $this->arrayRota ) > 2 ) {
-            for( $i = 2; $i < count( $this->arrayRota ); $i++ ) {
-                if( is_numeric( $this->arrayRota[$i] ) )
-                    $this->parametros[] =  intval($this->arrayRota[$i]);
-                else
-                    $this->logica .= "/".$this->arrayRota[$i];
+            for ($i = 2; $i < count($this->arrayRota); $i++) {
+                $param = $this->arrayRota[$i];
+                if (! is_numeric($param)) {
+                    $this->logica .= "/" . $param;
+                    $this->logicaComId .= "/" . $param;
+                } else {
+                    $param = (int) $this->arrayRota[$i];
+                    $this->parametros[] = (int) $param;
+                    array_push($dadosUsuario, (int) $param);
+                    $this->logicaComId .= "/:id";
+                }
             }
         }
-
-        $this->logicaComId = $this->logica.'/:id';
     }
 
 
-    public function getLogica(): string {
-        if( empty( $this->parametros ) )
+    public function getLogica(): string
+    {
+        if (empty($this->parametros))
             return $this->logica;
         return $this->logicaComId;
     }
 
 
-    public function getMetodo(): string {
+    public function getMetodo(): string
+    {
         return $this->metodo;
     }
 
@@ -64,4 +76,3 @@ final class Requisicao {
         return $this->parametros;
     }
 }
-?>
