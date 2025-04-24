@@ -10,16 +10,24 @@ abstract class Gestor {
     }
 
 
-    public function dadoEstaValido(array $dados , int|string $param):mixed{
-        if(isset($dados[$param]) && !empty($dados[$param])) return $dados[$param];
+    public function buscarDado(array $dados , $param){
+        return $dados[$param];
+    }
+
+
+    public function dadoEstaValido(array $dados , int|string $param , string|null $casting = null):mixed{
+        $dado = $this->buscarDado($dados , $param);
+        if(isset($dado) && !empty($dado)) return $casting ? $casting($dado) : $dado;
         return null;
     }
     
-    protected function validarDados(...$parametros) {
+    
+    public function validarDados(...$parametros) {
         $valido  = true;
 
         foreach ($parametros as $param) {
-            if (!$param || !isset($param)) {
+
+            if (!$param || !isset($param) || empty($param)) {
                 $valido = false;
                 break;
             };

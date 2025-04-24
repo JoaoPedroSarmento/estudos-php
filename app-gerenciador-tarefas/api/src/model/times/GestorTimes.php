@@ -12,28 +12,28 @@ final class GestorTimes extends Gestor {
     }
 
     public function cadastrar(array $dados): bool {
-        $nome = $this->dadoEstaValido($dados , "nome");
-        $descricao = $this->dadoEstaValido($dados , "descricao");
-        $id_lider = $this->dadoEstaValido($dados , "id_lider");
+        $nome = $this->buscarDado($dados , "nome");
+        $descricao = $this->buscarDado($dados , "descricao");
+        $id_lider = $this->buscarDado($dados , "id_lider" );
 
-        if (!$this->validarDados($nome, $descricao , $id_lider)) respostaJson(true, "Parâmetros inválidos!", 400);
+        // if (!$this->validarDados($nome, $descricao , $id_lider)) respostaJson(true, "Parâmetros inválidos!", 400);
         $time = new time(0,$nome , $descricao , $id_lider);
         return $this->controller->post($time, "Erro ao criar time! Erros: ");
     }
 
     public function alterar(array $dados): ?int {
         // idUsuario (para verificar se é um lider e pode alterar)
-        $id = $this->dadoEstaValido($dados , 0) ?? $this->dadoEstaValido($dados , "id");
-        $nome = $this->dadoEstaValido($dados , "nome");
-        $email = $this->dadoEstaValido($dados , "email");
-        $senha = $this->dadoEstaValido($dados , "senha");
-        $senhaNova = $this->dadoEstaValido($dados , "senhaNova");
+        $id = $this->buscarDado($dados , 0) ?? $this->buscarDado($dados , "id");
+        $nome = $this->buscarDado($dados , "nome");
+        $email = $this->buscarDado($dados , "email");
+        $senha = $this->buscarDado($dados , "senha");
+        $senhaNova = $this->buscarDado($dados , "senhaNova");
 
         if (!$this->validarDados($id, $nome, $email, $senha)) respostaJson(true, "Parâmetros inválidos!", 400);
 
         $timeBanco =  $this->controller->get($id, "Time não encontrado!");
 
-        $time = new time($id, $nome, $email, $senha, $this->dadoEstaValido($dados , "data_criacao"), $this->dadoEstaValido($dados , "ativo"));
+        $time = new time($id, $nome, $email, $senha, $this->buscarDado($dados , "data_criacao"), $this->buscarDado($dados , "ativo", "boolval"));
 
         // verificar se usuario tem permissao para alterar
         // if(){

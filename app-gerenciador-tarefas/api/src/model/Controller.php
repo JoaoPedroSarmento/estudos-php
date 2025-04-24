@@ -41,6 +41,7 @@ final class Controller {
     {
         $object->validar();
         $problemas = $object->getProblemas();
+
         if (! empty($problemas))
             throw new EntradaInvalidaException($msgErro ? $msgErro . $object->getProblemasString() . " - Dados Inválidos" :  "Erro ao alterar informações - Dados inválidos", 500, $problemas);
         $this->repositorio->alterar($object);

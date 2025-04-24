@@ -24,7 +24,7 @@ final class UsuarioTimeRepositorioEmBDR extends RepositorioEmBDR implements Repo
             "usuario_id" => $uT->usuario->id,
             "time_id" => $uT->time->id
         ];
-        $ps = $this->executar($sql,  $msgErro, $parametros);
+        ["ps" => $ps] = $this->executar($sql,  $msgErro, $parametros);
         return $ps->rowCount();
     }
 
@@ -38,7 +38,7 @@ final class UsuarioTimeRepositorioEmBDR extends RepositorioEmBDR implements Repo
             "papel" => $uT->papel
         ];
 
-        $ps = $this->executar($sql, $msgErro, $parametros);
+        ["ps" => $ps] = $this->executar($sql, $msgErro, $parametros);
         return $ps->rowCount() > 0;
     }
 

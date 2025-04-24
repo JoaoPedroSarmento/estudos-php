@@ -1,18 +1,15 @@
 <?php
 
-// criar instacia Gestor e em Gestor colocar dadoEstaValido
-
 $gestorTimes = new GestorTimes($conexao);
-$idTime = $gestorTimes->dadoEstaValido($dados , "idTime");
-$idUsuario = $gestorTimes->dadoEstaValido($dados , "idUsuario");
+$idTime = $gestorTimes->dadoEstaValido($dados , "idTime", "intval");
+$idUsuario = $gestorTimes->dadoEstaValido($dados , "idUsuario", "intval");
 
 $modeloRotas = [
     "/times" => [
-        "gestor" => $gestorTimes,
-        "POST" => GestorRotas::modelaMetodoHTTPDaRota(true , "cadastrar" , $dados , "Time criado com sucesso" , "Erro ao criar time!")
+        "POST" => Roteador::modelaRequisicao(true , "cadastrar" , $dados , "Time criado com sucesso" , "Erro ao criar time!", $gestorTimes)
     ],
      "/times/:id" => [
-        // "POST" => GestorRotas::modelaMetodoHTTPDaRota(false , "buscarPorId" , $dados , ""),
+        // "POST" => GestorRotas::modelaRequisicao(false , "buscarPorId" , $dados , ""),
      ]
 ];
 

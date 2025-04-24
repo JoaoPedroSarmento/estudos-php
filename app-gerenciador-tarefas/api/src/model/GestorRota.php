@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-final class Rota {
+final class GestorRota {
     public string $logica;
     private string $metodo;
     private array $parametros;
@@ -21,11 +21,11 @@ final class Rota {
         return $this->metodo;
     }
 
-    public function executarRota( Array $rotas , Gestor $gestor){ 
+    public function executarRota(Array $rotas){ 
         $rota =  $rotas[ $this->logica ][ $this->metodo ];
         
                
-        $funcao = $rota ? GestorRotas::criaFuncaoDaRota($rota , $gestor) : null;
+        $funcao = $rota ? Roteador::fabricaHandler($rota) : null;
 
         if($funcao){
                 try{

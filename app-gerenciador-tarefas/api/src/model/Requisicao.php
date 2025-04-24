@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-final class Requisicao
-{
+final class Requisicao {
     private array $dadosReq;
     private string $url = '';
     private string $arquivoAtual = '';

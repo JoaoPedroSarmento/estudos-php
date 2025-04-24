@@ -1,4 +1,4 @@
-
+-- criar tabela convite_time_usuario
 -- Usuários do sistema
 CREATE TABLE
     usuarios (

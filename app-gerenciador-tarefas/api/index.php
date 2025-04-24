@@ -11,7 +11,7 @@ declare(strict_types=1);
 
       $dados = json_decode(file_get_contents('php://input'), true) ?? [];
 
-      $rota = new Rota($_SERVER, $dados);
+      $gestorRota = new GestorRota($_SERVER, $dados);
 
       $metodo = $rota->getMetodo();
 
@@ -26,9 +26,7 @@ declare(strict_types=1);
       $rotasArray = require_once "src/rotas.php";
 
       foreach ($rotasArray as $rotas) {
-         if (isset($rotas[$rota->logica])) {
-            $rota->executarRota($rotas,  $rotas[$rota->logica]["gestor"]);
-         };
+         if (isset($rotas[$gestorRota->logica])) $gestorRota->executarRota($rotas);
       }
 
 

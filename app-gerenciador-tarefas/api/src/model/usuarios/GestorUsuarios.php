@@ -11,7 +11,7 @@ final class GestorUsuarios extends Gestor {
 
     public function usuarioComId(int $id, string $senha, ?string $email = null): Usuario|null {
     
-        if(!$this->validarDados([$id , $senha , $email])) respostaJson(true , "Parâmetros inválidos!" , 400);
+        // if(!$this->validarDados([$id , $senha , $email])) respostaJson(true , "Parâmetros inválidos!" , 400);
         $usuario = $this->controller->get($id, "Usuário não encontrado!" , null , $email , true);
         if ($usuario && $usuario->verificaSenha($senha)) {
             return $usuario;
@@ -21,9 +21,9 @@ final class GestorUsuarios extends Gestor {
 
     public function cadastrar(array $dados): int {
       
-        $nome =  $this->dadoEstaValido($dados , "nome");
-        $email = $this->dadoEstaValido($dados , "email");
-        $senha = $this->dadoEstaValido($dados , "senha");
+        $nome =  $this->buscarDado($dados , "nome" );
+        $email = $this->buscarDado($dados , "email"  );
+        $senha = $this->buscarDado($dados , "senha"  );
 
         if(!$nome || !$email || !$senha) respostaJson(true , "Parâmetros inválidos" , 400);
         
@@ -33,11 +33,11 @@ final class GestorUsuarios extends Gestor {
 
     public function alterar(array $dados): int|null {
         
-        $id = (int) ($this->dadoEstaValido($dados , "id") || $this->dadoEstaValido($dados , 0));
-        $nome =  $this->dadoEstaValido($dados , "nome");
-        $email = $this->dadoEstaValido($dados , "email");
-        $senha = $this->dadoEstaValido($dados , "senha");
-        $senhaNova = $this->dadoEstaValido($dados , "senhaNova");
+        $id =   ($this->buscarDado($dados , "id" , "intval") ?? $this->buscarDado($dados , 0, "intval"));
+        $nome =  $this->buscarDado($dados , "nome");
+        $email = $this->buscarDado($dados , "email");
+        $senha = $this->buscarDado($dados , "senha");
+        $senhaNova = $this->buscarDado($dados , "senhaNova");
 
         if (!$id ||  !$nome  || !$email || !$senha) respostaJson(true, "Parâmetros inválidos!", 400);
 

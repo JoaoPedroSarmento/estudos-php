@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-final class GestorTimes extends Gestor
+final class GestorUsuarioTime extends Gestor
 {
 
     public function __construct(PDO $conexao)
@@ -39,30 +39,27 @@ final class GestorTimes extends Gestor
         return $time;
     }
 
-    public function cadastrar(array $dados): int
+    public function cadastrar(int $idTime , int $idUsuario, string $papel): int
     {
-        $nome = $this->dadoEstaValido($dados , "nome");
-        $email = $this->dadoEstaValido($dados , "email");
-        $senha = $this->dadoEstaValido($dados , "senha");
-
-        if (!$this->validarDados($nome , $email , $senha)) respostaJson(true, "Parâmetros inválidos!", 400);
-        $time = new time(0, $dados["nome"], $dados["email"], $dados["senha"]);
+        
+        // if (!$this->validarDados($idTime , $idUsuario)) respostaJson(true, "Parâmetros inválidos!", 400);
+        $time = new UsuarioTime($idUsuario , $idTime , $papel);
         return $this->controller->post($time, "Erro ao criar usuário! Erros: ");
     }
 
     public function alterar(array $dados): ?int {
         // idUsuario (para verificar se é um lider e pode alterar)
-        $id = $this->dadoEstaValido($dados , 0) ?? $this->dadoEstaValido($dados, "id");
-        $nome =  $this->dadoEstaValido($dados , "nome");
-        $email = $this->dadoEstaValido($dados , "email");
-        $senha = $this->dadoEstaValido($dados , "senha");
-        $senhaNova = $this->dadoEstaValido($dados, "senhaNova");
+        $id = $this->buscarDado($dados , 0, "intval") ?? $this->buscarDado($dados, "id",);
+        $nome =  $this->buscarDado($dados , "nome" );
+        $email = $this->buscarDado($dados , "email" );
+        $senha = $this->buscarDado($dados , "senha");
+        $senhaNova = $this->buscarDado($dados, "senhaNova");
 
-        if (!$this->validarDados($id, $nome, $email, $senha)) respostaJson(true, "Parâmetros inválidos!", 400);
+        // if (!$this->validarDados($id, $nome, $email, $senha)) respostaJson(true, "Parâmetros inválidos!", 400);
 
         $timeBanco =  $this->controller->get($id, "Usuário não encontrado!");
 
-        $time = new time( $id, $nome, $email, $senha, $this->dadoEstaValido($dados , "data_criacao"), $this->dadoEstaValido($dados , "ativo"));
+        $time = new time( $id, $nome, $email, $senha, $this->buscarDado($dados , "data_criacao"), $this->buscarDado($dados , "ativo"));
 
         // verificar se usuario tem permissao para alterar
         // if(){

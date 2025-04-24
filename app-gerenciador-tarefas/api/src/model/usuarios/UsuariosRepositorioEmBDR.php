@@ -16,9 +16,9 @@ final class UsuariosRepositorioEmBDR extends RepositorioEmBDR implements Reposit
         "senha" => $u->senha
       ];
 
-      $this->executar($sql , $msgErro , $parametros);
+    ["conexao" => $conexao] =   $this->executar($sql , $msgErro , $parametros);
 
-      return 1;
+      return (int) $conexao->lastInsertId();
     }
 
 
@@ -32,7 +32,7 @@ final class UsuariosRepositorioEmBDR extends RepositorioEmBDR implements Reposit
         "senha" => $u->senha,
        ];
 
-     $ps =  $this->executar($sql , $msgErro , $parametros);
+     ["ps" => $ps] =  $this->executar($sql , $msgErro , $parametros);
      return $ps->rowCount() > 0;
 }
 

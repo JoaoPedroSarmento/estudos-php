@@ -47,13 +47,11 @@ abstract class RepositorioEmBDR {
     }
 
   
-protected function executar($sql , $msgErro ,$parametros = []):PDOStatement{
+protected function executar($sql , $msgErro ,$parametros = []):array{
     try{
-        
         $ps = $this->conexao->prepare($sql);
         $ps->execute($parametros);
-        
-        return $ps;
+        return ["ps" => $ps ,  "conexao" => $this->conexao];
 
     }catch(PDOException $e){
         if($e->getCode() == "23000") respostaJson(true, $msgErro , 500);

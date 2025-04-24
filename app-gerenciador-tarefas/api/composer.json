@@ -8,6 +8,7 @@
             "src/excecoes",
             "src/model",
             "src/model/times",
+            "src/model/usuario-time",
             "src/model/usuarios",
             "src/util"
         ]

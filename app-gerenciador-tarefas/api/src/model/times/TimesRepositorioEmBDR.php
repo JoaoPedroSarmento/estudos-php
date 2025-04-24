@@ -35,7 +35,7 @@ final class TimesRepositorioEmBDR extends RepositorioEmBDR implements Repositori
        ];
 
        // verificar se o usuário é um líder!
-     $ps =  $this->executar($sql , $msgErro , $parametros);
+     ["ps" => $ps] =  $this->executar($sql , $msgErro , $parametros);
      return $ps->rowCount() > 0;
 }
 
