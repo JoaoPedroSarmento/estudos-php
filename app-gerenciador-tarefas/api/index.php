@@ -13,7 +13,7 @@ declare(strict_types=1);
 
       $gestorRota = new GestorRota($_SERVER, $dados);
 
-      $metodo = $rota->getMetodo();
+      $metodo = $gestorRota->getMetodo();
 
       if ($metodo != "GET") {
          if (empty($dados)) {

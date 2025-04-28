@@ -16,8 +16,8 @@ abstract class Gestor {
 
 
     public function dadoEstaValido(array $dados , int|string $param , string|null $casting = null):mixed{
-        $dado = $this->buscarDado($dados , $param);
-        if(isset($dado) && !empty($dado)) return $casting ? $casting($dado) : $dado;
+       
+        if(isset($dados[$param]) && !empty($dados[$param])) return $casting ? $casting($dados[$param]) : $dados[$param];
         return null;
     }
     
