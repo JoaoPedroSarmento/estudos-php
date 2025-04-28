@@ -10,8 +10,8 @@ abstract class Gestor {
     }
 
 
-    public function buscarDado(array $dados , $param){
-        return $dados[$param];
+    public function buscarDado(array $dados , string|int $param , string|null $casting = null){
+        return $casting ? $casting($dados[$param]) : $dados[$param];
     }
 
 
